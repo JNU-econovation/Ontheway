@@ -40,11 +40,17 @@ function handleOptionSelected(e) {
         const whoTitleElem = document.querySelector('.who-dropdown .who-title');
         const blueDonut = document.querySelector('.moving-donut');
         const smile1 = document.querySelector('.moving-smile-1');
+        const whoText = document.querySelector('.who-text');
 
         whoTitleElem.style.color = "black";
         whoTitleElem.textContent = newValue;
         blueDonut.style.display = "inherit";
         smile1.style.display = "inherit";
+        if (id === 'alone') {
+            whoText.style.display = "none";
+        } else {
+            whoText.style.display = "inherit";
+        }
     } else {
         const howTitleElem = document.querySelector('.how-dropdown .how-title');
         const smile2 = document.querySelector('.moving-smile-2');
