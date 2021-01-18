@@ -20,95 +20,100 @@
     </header>
     <div class="interactive">
         <div class="moving-donut">
-            <img src="src/blue_donut.png" height="480rem" width="480rem" draggable="false" />
+            <img class="img-moving-donut" src="src/blue_donut.png" draggable="false" />
         </div>
         <div class="moving-smile-1">
-            <img src="src/smile1.png" height="220rem" width="220rem" draggable="false" />
+            <img class="img-moving-smile-1" src="src/smile1.png" draggable="false" />
         </div>
         <div class="moving-smile-2">
-            <img src="src/smile2.png" height="240rem" width="240rem" draggable="false" />
+            <img class="img-moving-smile-2" src="src/smile2.png" draggable="false" />
         </div>
         <div class="pink-star-1">
-            <img src="src/pink_star_1.png" height="550rem" width="550rem" draggable="false" />
+            <img class="img-pink-star-1" src="src/pink_star_1.png" draggable="false" />
         </div>
         <div class="pink-star-2">
-            <img src="src/pink_star_2.png" height="550rem" width="550rem" draggable="false" />
+            <img class="img-pink-star-2" src="src/pink_star_2.png" draggable="false" />
         </div>
         <div class="moving-smile-3">
-            <img src="src/smile3.png" height="220rem" width="220rem" draggable="false" />
+            <img class="img-moving-smile-3" src="src/smile3.png" draggable="false" />
         </div>
         <div class="green-arrow">
-            <img src="src/green_arrow.png" height="400rem" width="550rem" draggable="false" />
+            <img class="img-green-arrow" src="src/green_arrow.png" draggable="false" />
         </div>
         <div class="moving-smile-4">
-            <img src="src/smile4.png" height="240rem" width="240rem" draggable="false" />
+            <img class="img-moving-smile-4" src="src/smile4.png" draggable="false" />
         </div>
     </div>
-    <div class="main">
-        <div class="logo">
-            <img src="src/logo.png" draggable="false" />
-        </div>
-        <div class="user-info">
-            <div class="who-how">
-                <div class="who">
-                    <div class="who-dropdown">
-                        <div class="who-title pointerCursor">동행과
-                            <img class="small-arrow" src="src/small_arrow.png" height="12px" width="10px"
-                                draggable="false" /></div>
-                        <div class="who-menu pointerCursor hide">
-                            <div class="who-option" id="couple">연인과</div>
-                            <div class="who-option" id="family">가족과</div>
-                            <div class="who-option" id="friend">친구와</div>
-                            <div class="who-option" id="alone">혼자</div>
+    <div class="main-container">
+        <div class="main">
+            <div class="logo">
+                <img src="src/logo.png" draggable="false" />
+            </div>
+            <div class="user-info">
+                <div class="who-how">
+                    <div class="who">
+                        <div class="who-dropdown">
+                            <div class="who-title pointerCursor">동행과
+                                <img class="small-arrow" src="src/small_arrow.png" height="12px" width="10px"
+                                    draggable="false" /></div>
+                            <div class="who-menu pointerCursor hide">
+                                <div class="who-option" id="couple">연인과</div>
+                                <div class="who-option" id="family">가족과</div>
+                                <div class="who-option" id="friend">친구와</div>
+                                <div class="who-option" id="alone">혼자</div>
+                            </div>
                         </div>
+                        <div class="blank"></div>
+                        <div class="who-text">함께</div>
                     </div>
                     <div class="blank"></div>
-                    <div class="who-text">함께</div>
-                </div>
-                <div class="blank"></div>
-                <div class="blank"></div>
-                <div class="how">
-                    <div class="how-dropdown">
-                        <div class="how-title pointerCursor">교통수단
-                            <img class="small-arrow" src="src/small_arrow.png" height="12px" width="10px"
-                                draggable="false" /></div>
-                        <div class="how-menu pointerCursor hide">
-                            <div class="how-option" id="car">자가용(택시)</div>
-                            <div class="how-option" id="bus">대중교통</div>
-                        </div>
-                    </div>
                     <div class="blank"></div>
-                    <div class="how-text">(을)를 타고</div>
+                    <div class="how">
+                        <div class="how-dropdown">
+                            <div class="how-title pointerCursor">교통수단
+                                <img class="small-arrow" src="src/small_arrow.png" height="12px" width="10px"
+                                    draggable="false" /></div>
+                            <div class="how-menu pointerCursor hide">
+                                <div class="how-option" id="car">자가용(택시)</div>
+                                <div class="how-option" id="bus">대중교통</div>
+                            </div>
+                        </div>
+                        <div class="blank"></div>
+                        <div class="how-text">(을)를 타고</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="when-where">
-            <div class="when">
-                <div class="when-dropdown">
-                    <div class="when-title pointerCursor">
-                        <input type="text" id="calendar-tomorrow" placeholder="언제" onchange="activateWhenAnimation()">
+            <div class="when-where">
+                <div class="when">
+                    <div class="when-dropdown">
+                        <div class="when-title pointerCursor">
+                            <input type="text" id="calendar-tomorrow" placeholder="언제"
+                                onchange="activateWhenAnimation()">
 
-                    </div>
-                </div>
-            </div>
-            <div class="blank"></div>
-            <div class="blank"></div>
-            <div class="where">
-                <div class="where-dropdown">
-                    <div class="where-title pointerCursor">
-                        <input type="text" id="where-input" placeholder="어느 지역으로" onchange="activateWhereAnimation()" />
+                        </div>
                     </div>
                 </div>
                 <div class="blank"></div>
-                <div class="where-text">가는길에</div>
+                <div class="blank"></div>
+                <div class="where">
+                    <div class="where-dropdown">
+                        <div class="where-title pointerCursor">
+                            <input type="text" id="where-input" placeholder="어느 지역으로"
+                                onchange="activateWhereAnimation()" />
+                        </div>
+                    </div>
+                    <div class="blank"></div>
+                    <div class="where-text">가는길에</div>
+                </div>
             </div>
+            <div class="blank"></div>
+            <div class="user-text">
+                갈만한 곳을 알고 싶어요
+            </div>
+            <div class="blank-2"></div>
+            <button class="btn-start" type="submit" onClick="location.href='index.html'">START</button>
         </div>
-        <div class="blank"></div>
-        <div class="user-text">
-            갈만한 곳을 알고 싶어요
-        </div>
-        <div class="blank-2"></div>
-        <button class="btn-start" type="submit" onClick="location.href='index.html'">START</button>
+
     </div>
     </div>
 
