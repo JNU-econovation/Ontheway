@@ -36,7 +36,7 @@ $("#searchKeyword").keydown(function (key) {
             url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
             async: false,
             data: {
-                "appKey": "발급받은 키",
+                "appKey": "발급받은키",
                 "searchKeyword": searchKeyword,
                 "resCoordType": "EPSG3857",
                 "reqCoordType": "WGS84GEO",

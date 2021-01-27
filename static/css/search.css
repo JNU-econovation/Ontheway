@@ -172,11 +172,13 @@ section {
 #search-lat {
     font-size: 0.3rem;
     color: white;
+    display: none;
 }
 
 #search-lng {
     font-size: 0.3rem;
     color: white;
+    display: none;
 }
 
 .places-blank {

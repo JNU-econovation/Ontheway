@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가는길에</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}" />
+    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은키"></script>
+    <style>
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            appearance: none;
+            opacity: 1;
+            color: #000000;
+            background: url({{ url_for('static', filename='src/spinner.png') }});
+            cursor: pointer;
+            display: block;
+            width: 10px;
+            height: 20px;
+            color: #333;
+            text-align:center;
+            position:relative;
+        }
+    </style>
+</head>
+<body style="max-width: 925px;">
+    <div id="header">
+        <div id="searchbox">
+            <div id="title">
+                <img src="{{ url_for('static', filename='src/logo.png') }}" >
+                <a href="#"></a>
+            </div>
+            <div id="search">
+                <form>
+                    <fieldset class="fld_inside">
+                        <input type="text" class="textbox" name="searchbox" maxlength="50" autocomplete="off" placeholder="장소를 입력하세요.">
+                        <button id="searchbtn" style="background-image: url( {{url_for('static', filename='src/search.png')}} )"></button>    
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div id="location">
+            <img src="{{ url_for('static', filename='src/location.png') }}" >
+            <h1>부산광역시</h1>
+        </div>
+        <div class="icons">
+            <div class="icon" id="calendar"><img src="{{ url_for('static', filename='src/calendar.png') }}"></div>
+            <div class="icon" id="car"><img src="{{ url_for('static', filename='src/car.png') }}"></div>
+            <div class="icon" id="smile"><img src="{{ url_for('static', filename='src/smile.png') }}"></div>
+            <div class="icon" id="keep"><img src="{{ url_for('static', filename='src/keep.png') }}"></div>
+        </div>
+    </div>
+    <div class="info">
+        <img id="info" src="{{ url_for('static', filename='src/information.png') }}">
+    </div>
+
+    <div id="timeset">
+        <div class="header">
+            <span class="title">여행시간 상세설정</span>
+            <span id="possibleT" class="time_txt">총 소요시간 23시간 59분</span>
+        </div>
+        <div class="content">
+            <span class="date_txt">2020.01.21</span>
+            <input type="number" name="starthour" min="0" max="23" value="0">
+            <span>시</span>
+            <input type="number" name="startmin" min="0" max="59" value="0">
+            <span>분 ~ </span>
+            <input type="number" name="endhour" min="0" max="23" value="23">
+            <span>시</span>
+            <input type="number" name="endmin" min="0" max="59" value="59">
+            <span>분</span>
+        </div> 
+    </div>
+
+    <div id="schedule">
+        <div class="placelist">
+            <div class="header">
+                <span class="title">일정 목록</span>
+                <span id="actualT" class="time_txt">총 소요시간 8시간 00분</span>
+            </div>
+            <ul id="placeul">
+                <li class="placeitem">
+                    <span class="point">•</span>
+                    <div class="iteminfo">
+                        <span id="placename" class="placename noborder">해성막창</span>
+                        <div class="visitT noborder">
+                            <input type="number" name="visithour" min="0" max="23" value="2">
+                            <span>시간</span>
+                            <input type="number" name="visitmin" min="0" max="59" value="0">
+                            <span>분</span>    
+                        </div>
+                        <span id="removebtn" class="removebtn noborder" onclick="addRemoveEvent()">x</span>        
+                    </div>
+                </li>
+                <li class="placeitem">
+                    <span class="point">•</span>
+                    <div class="iteminfo">
+                        <span id="placename" class="placename topborder">다리집</span>
+                        <div class="visitT topborder">
+                            <input type="number" name="visithour" min="0" max="23" value="2">
+                            <span>시간</span>
+                            <input type="number" name="visitmin" min="0" max="59" value="0">
+                            <span>분</span>    
+                        </div>
+                        <span id="removebtn" class="removebtn topborder" onclick="addRemoveEvent()">x</span>        
+                    </div>
+                </li>
+                <li class="placeitem">
+                    <span class="point">•</span>
+                    <div class="iteminfo">
+                        <span id="placename" class="placename topborder">신발원</span>
+                        <div class="visitT topborder">
+                            <input type="number" name="visithour" min="0" max="23" value="2">
+                            <span>시간</span>
+                            <input type="number" name="visitmin" min="0" max="59" value="0">
+                            <span>분</span>    
+                        </div>
+                        <span id="removebtn" class="removebtn topborder" onclick="addRemoveEvent()">x</span>        
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="reclist">
+            <span class="title">사용자님이 좋아하실 것 같은 장소예요 🤓</span>
+            <ul id="recul">
+                <li class="recitem">
+                    <img class="recimg" src="{{ url_for('static', filename='src/keep.png') }}"/>
+                    <div class="recinfo">
+                        <span id="rectitle">송정 해수욕장</span>
+                    </div>
+                    <img id="plusbtn" class="plusbtn" src="{{ url_for('static', filename='src/plus.png') }}" onclick='addPlaceListEvent()'/>
+                </li>
+                <li class="recitem">
+                    <img class="recimg" src="{{ url_for('static', filename='src/keep.png') }}"/>
+                    <div class="recinfo">
+                        <span id="rectitle">해운대 해수욕장</span>
+                    </div>
+                    <img id="plusbtn" class="plusbtn" src="{{ url_for('static', filename='src/plus.png') }}" onclick='addPlaceListEvent()'/>
+                </li>
+
+            </ul>
+        </div>
+        <div id="completebtn">일정생성</div>
+    </div>
+
+    <div id="map"></div>
+    <div id="searchres">
+        <ul id="searchul">
+            <!-- <li class="searchitem">장소</li>
+            <li class="searchitem">장소</li>
+            <li class="searchitem">장소</li>
+            <li class="searchitem">장소</li>
+            <li class="searchitem">장소</li>
+            <li class="searchitem">장소</li> -->
+        </ul>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}"></script>
+</body>
+</html>
