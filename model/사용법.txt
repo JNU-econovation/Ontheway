@@ -1,7 +1,0 @@
-E:
-cd E:\DL_project\Recommender\stamptour\리펙토링2\VAE\Influence_RecVAE-master_input
-python run.py --dataset "datasets_sentiment/ST_stamp_relation_use_filtering" --influence_dataset "datasets_sentiment/ST_Influence_based_Su_using_Rn"
-
-E:
-cd E:\DL_project\Recommender\stamptour\리펙토링2\VAE\Influence_EVCF-master_input - 복사본
-python experiment.py --dataset_name="st" --max_beta=0.3 --model_name="hvamp" --gated --input_type="binary" --z1_size=200 --z2_size=200 --hidden_size=600 --num_layers=2 --note="Netflix(H+Vamp+Gate)"
