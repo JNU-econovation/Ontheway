@@ -703,10 +703,12 @@ input:focus {
     font-size: 1px;
     color: white;
     overflow: hidden;
+    display: none;
 }
 
 #search-lng {
     font-size: 0.001rem;
     color: white;
     overflow: hidden;
+    display: none;
 }
