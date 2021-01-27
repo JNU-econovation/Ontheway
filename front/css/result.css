@@ -1,0 +1,164 @@
+@font-face {
+    font-family: "NotoSans-R";
+    src: url("../fonts/NotoSansKR-Regular.otf");
+}
+
+@font-face {
+    font-family: "NotoSans-M";
+    src: url("../fonts/NotoSansKR-Medium.otf");
+}
+
+@font-face {
+    font-family: "NotoSans-B";
+    src: url("../fonts/NotoSansKR-Bold.otf");
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #FFE13C;
+    font-family: "NotoSans-B";
+    font-style: normal;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+.btn-logo {
+    margin-left : 5%;
+    margin-top: 1%;
+    background-color: #FFE13C;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+#btn-help {
+    margin-left: 82%;
+    margin-top: 1%;
+    background-color: #FFE13C;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+/* 줄어들면 가로 스크롤 생겨야 하는데 안 생김 ㅠㅠ*/
+#locations-container {
+    display: flex;
+    justify-content: space-around;
+    /* justify-content: space-evenly; */
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: auto; 
+    width: 74rem;
+    height: 39rem;
+}
+
+
+
+#location-item {
+    width: 17rem;
+    height: 16rem;
+    background-image: url("../src/location_box.png");
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 4%;
+    padding-left: 1.5%;
+}
+
+
+#location-text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    height: 3rem;
+}
+
+.visiting-time {
+    height: 1.3rem;
+    font-size: 0.8rem;
+    color: #000000;
+    opacity: 0.6;
+    font-weight: 600;
+}
+
+#location-time {
+    font-size: 0.8rem;
+    color: #000000;
+    opacity: 0.6;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+}
+
+.location-blank {
+    height: 6%;
+}
+
+.location-map {
+    width: 92%;
+    height: 53%;
+    /* background-color: red; */
+}
+
+.blank {
+    height: 3%;
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+}
+
+.btn-restart {
+    /* background-color: #FFE13C; */
+    background-image: url("../src/btn_restart.png");
+    height: 3.75rem;
+    width: 3.75rem;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+#btn-final {
+    width: 15rem;
+    height: 3.75rem;
+    background-color: black;
+    color: white;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    font: "NotoSans-R";
+    font-size: 1.3rem;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.blank_2 {
+    width: 3%;
+}

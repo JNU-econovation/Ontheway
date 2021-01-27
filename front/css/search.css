@@ -1,0 +1,252 @@
+@font-face {
+    font-family: "NotoSans-R";
+    src: url("../fonts/NotoSansKR-Regular.otf");
+}
+
+@font-face {
+    font-family: "NotoSans-M";
+    src: url("../fonts/NotoSansKR-Medium.otf");
+}
+
+@font-face {
+    font-family: "NotoSans-B";
+    src: url("../fonts/NotoSansKR-Bold.otf");
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #FFE13C;
+    font-family: "NotoSans-B";
+    font-style: normal;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+#btn-help {
+    margin-left: 95%;
+    margin-top: 1%;
+    background-color: #FFE13C;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50rem;
+    height: 35rem;
+}
+
+.main_blank {
+    height: 6.5rem;
+}
+.main_blank_2 {
+    height: 5rem;
+}
+.input-places {
+    width: 37.5rem;
+    color: #B7A43E;
+    border-bottom: 2px solid black;
+}
+
+.input-search {
+    width: 90%;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    background: rgba(0,0,0,0);
+    border: none;
+    margin-left: 3%;
+    margin-bottom: 1.5%;
+    outline:none;
+}
+
+
+#btn-start {
+    /* width: 240px;
+    height: 60px; */
+    width: 15rem;
+    height: 3.75rem;
+    background-color: black;
+    color: white;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    font: "NotoSans-R";
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+#speech_bubble {
+    visibility: hidden;
+}
+
+/* 밖에 누르면 다시 안보이게 */
+.places-example {
+    position: relative;
+    width: 37.5rem;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    z-index: 100;
+    visibility: inherit;
+}
+
+#search-result {
+    position: relative;
+    width: 37.5rem;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+}
+
+#search-item-li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    background-color: white;
+    color: black;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    cursor: pointer;
+}
+
+#search-item-li:hover {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    background-color: black;
+    color: white;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    cursor: pointer;
+}
+
+#search-item {
+    display: flex;
+    align-items: center;
+}
+
+#search-lat {
+    font-size: 0.3rem;
+    color: white;
+}
+
+#search-lng {
+    font-size: 0.3rem;
+    color: white;
+}
+
+.places-blank {
+    height: 1.2rem;
+}
+
+#selected-places {
+    height: 3rem;
+    width: 37.5rem; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#total {
+    width: 4rem; 
+}
+
+#selected-items {
+    width: 34rem; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#selected-items::-webkit-scrollbar {
+    background: rgba(0,0,0,0);
+    height: 0.55rem;
+}
+
+#selected-items::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10rem;
+}
+
+#selected-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.25rem;
+    font-family: "NotoSans-M";
+    font-style: normal;
+    font-size: 0.9rem;
+    border: 1px solid black;
+    border-radius: 10rem;
+    margin: 0.2rem;
+    padding: 0.2rem;
+}
+
+#btn-remove {
+    display: center;
+    justify-content: center;
+    align-items: center;
+    height: 1.2rem;
+    width: 1.2rem;
+    background-color:rgba(0,0,0,0);
+    border:none;
+    outline:none;
+    cursor: pointer;
+    text-align: center;
+}
+
+#btn_mini_x {
+    display: block; 
+    margin: 0px auto;
+}
+
+#selected-blank {
+    width: 0.5rem;
+}
+

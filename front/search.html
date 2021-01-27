@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가는길에</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx776550556a074246a28571676aa85c40"></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/search.css">
+</head>
+
+<body>
+    <header>
+        <button id="btn-help" alt="가는길에 웹서비스 설명버튼">
+            <img src="src/btn_help.png" alt="" draggable="false">
+        </button>
+    </header>
+    <section>
+        <div class="main">
+            <div class="logo">
+                <img src="src/logo.png" alt="가는길에 메인로고" draggable="false" />
+            </div>
+            <div class="main_blank"></div>
+            <div class="places-container">
+                <div class="input-places click-in">
+                    <!-- 사용자가 작성한 장소에 따라 ' '안에 내용 바꾸기 -->
+                    <input type="text" id="searchKeyword" class="input-search click-in" name="searchKeyword"
+                        alt="가고싶은 장소 입력" placeholder="가는길에 들리고 싶은 장소 및 업소명을 알려주세요!" autocomplete="off">
+                </div>
+                <div class="places-example click-in">
+                    <ul id="search-result" class="click-in" name="search-result">
+                        <!-- <li id="search-item-li">
+                        <div id="search-item">
+                            <div id="search-name">검색결과1 </div>
+                            <div id="search-lat">38.00000000 </div>
+                            <div id="search-lng">33.0000000 </div>
+                        </div>
+                    </li>-->
+                    </ul>
+                </div>
+                <div class="places-blank"></div>
+                <div id="selected-places">
+                    <!-- <div id="total">총 4 곳</div>
+                    <div id="selected-items">
+                        <div id="selected-item">해성막창 <button id="btn-remove" alt="추가했던 장소 삭제 버튼"><img
+                                    src="src/btn_mini_x.png" id="btn_mini_x" alt="" /></button></div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="main_blank_2"></div>
+            <div id="speech_bubble">
+                <img src="src/speech_bubble.png" alt="">
+            </div>
+            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onClick="location.href='result.html'"
+                onmouseover="showSpeechBubble()" onmouseout="hideSpeechBubble()">
+                <span>다음단계</span>
+                <img src="src/small_arrow_right.png" alt="" />
+            </button>
+        </div>
+    </section>
+    <script src="js/search.js"></script>
+</body>
+
+</html>
