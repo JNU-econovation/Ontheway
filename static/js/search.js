@@ -27,6 +27,23 @@ function addRemoveFunctionToBtn() {
     }
 }
 
+function goToMap() {
+    $.ajax({
+        method: "POST",
+        url: "/map",
+        async: true,
+        data: {
+            clicked_items
+        },
+        success: function (response) {
+            window.location.href = '/map';
+        },
+        // error: function (request, status, error) {
+        //     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        // }
+    })
+}
+
 // API 연결
 $("#searchKeyword").keydown(function (key) {
     if (key.keyCode == 13) {
@@ -142,20 +159,3 @@ $('html').click(function (e) {
     }
 });
 
-function goToMap() {
-
-    $.ajax({
-        method: "POST",
-        url: "/map",
-        async: true,
-        data: {
-            clicked_items
-        },
-        success: function (response) {
-            window.location.href = '/map';
-        },
-        // error: function (request, status, error) {
-        //     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        // }
-    })
-}

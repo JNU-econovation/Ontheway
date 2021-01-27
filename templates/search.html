@@ -69,8 +69,8 @@
             <div id="speech_bubble">
                 <img src="{{ url_for('static', filename='src/speech_bubble.png') }}" alt="">
             </div>
-            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onClick="location.href='/map'"
-                onmouseover="showSpeechBubble()" onmouseout="hideSpeechBubble()">
+            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onclick="goToMap()" onmouseover="showSpeechBubble()"
+                onmouseout="hideSpeechBubble()">
                 <span>다음단계</span>
                 <img src="{{ url_for('static', filename='src/small_arrow_right.png') }}" alt="" />
             </button>
