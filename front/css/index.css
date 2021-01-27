@@ -318,7 +318,7 @@ header {
 }
 
 .who-dropdown {
-    border-bottom: 1px solid black;
+    
     text-align: center;
     font: 1.5rem;
     width: 8rem;
@@ -349,6 +349,7 @@ header {
     align-items: center;
     color: #B7A43E;
     height: 2.5rem;
+    border-bottom: 1px solid black;
 }
 
 .small-arrow {
@@ -371,7 +372,7 @@ header {
 }
 
 .how-dropdown {
-    border-bottom: 1px solid black;
+
     text-align: center;
     font: 1.5rem;
     width: 8rem;
@@ -402,13 +403,15 @@ header {
     align-items: center;
     color: #B7A43E;
     height: 2.5rem;
+    border-bottom: 1px solid black;
 }
 
 .when {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    /* height: 100%; */
+    height: 6rem;
 }
 
 .when-dropdown {
@@ -435,7 +438,9 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    /* height: 100%; */
+    height: 6rem;
+    
 }
 
 .where-dropdown {
@@ -444,6 +449,8 @@ header {
     font: 1.5rem;
     width: 11rem;
     font-weight: 600;
+    position: relative;
+    z-index: 200;
 }
 
 .where-dropdown .where-title {
@@ -616,4 +623,90 @@ input:focus {
     height: auto;
     width: 14vw;
     min-width: 7rem;
+}
+
+
+.where-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    /* top: 1.5rem; */
+    z-index: 200;
+}
+
+#search-result {
+    position: relative;
+    width: 11rem;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+    visibility: inherit;
+}
+
+#search-item-li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    background-color: white;
+    color: black;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    cursor: pointer;
+    position: relative;
+    z-index: 200;
+}
+
+#search-item-li:hover {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    background-color: black;
+    color: white;
+    font-family: "NotoSans-R";
+    font-style: normal;
+    font-size: 1.1rem;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    cursor: pointer;
+}
+
+#search-item {
+    display: flex;
+    overflow: hidden;
+}
+
+#search-name {
+    white-space: nowrap;
+}
+
+#search-latlng {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+#search-lat {
+    font-size: 1px;
+    color: white;
+    overflow: hidden;
+}
+
+#search-lng {
+    font-size: 0.001rem;
+    color: white;
+    overflow: hidden;
 }
