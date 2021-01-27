@@ -5,57 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가는길에</title>
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css" />
     <!--  Flatpickr  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/light.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은키"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
+
 </head>
 
 <body>
     <header>
         <button id="btn-help">
-            <img src="src/btn_help.png" height="40em" width="40em" draggable="false">
+            <img src="src/btn_help.png" alt="가는길에 웹서비스 설명버튼" draggable="false">
         </button>
     </header>
     <div class="interactive">
         <div class="moving-donut">
-            <img class="img-moving-donut" src="src/blue_donut.png" draggable="false" />
+            <img class="img-moving-donut" src="src/blue_donut.png" alt="" draggable="false" />
         </div>
         <div class="moving-smile-1">
-            <img class="img-moving-smile-1" src="src/smile1.png" draggable="false" />
+            <img class="img-moving-smile-1" src="src/smile1.png" alt="" draggable="false" />
         </div>
         <div class="moving-smile-2">
-            <img class="img-moving-smile-2" src="src/smile2.png" draggable="false" />
+            <img class="img-moving-smile-2" src="src/smile2.png" alt="" draggable="false" />
         </div>
         <div class="pink-star-1">
-            <img class="img-pink-star-1" src="src/pink_star_1.png" draggable="false" />
+            <img class="img-pink-star-1" src="src/pink_star_1.png" alt="" draggable="false" />
         </div>
         <div class="pink-star-2">
-            <img class="img-pink-star-2" src="src/pink_star_2.png" draggable="false" />
+            <img class="img-pink-star-2" src="src/pink_star_2.png" alt="" draggable="false" />
         </div>
         <div class="moving-smile-3">
-            <img class="img-moving-smile-3" src="src/smile3.png" draggable="false" />
+            <img class="img-moving-smile-3" src="src/smile3.png" alt="" draggable="false" />
         </div>
         <div class="green-arrow">
-            <img class="img-green-arrow" src="src/green_arrow.png" draggable="false" />
+            <img class="img-green-arrow" src="src/green_arrow.png" alt="" draggable="false" />
         </div>
         <div class="moving-smile-4">
-            <img class="img-moving-smile-4" src="src/smile4.png" draggable="false" />
+            <img class="img-moving-smile-4" src="src/smile4.png" alt="" draggable="false" />
         </div>
     </div>
     <div class="main-container">
         <div class="main">
             <div class="logo">
-                <img src="src/logo.png" draggable="false" />
+                <img src="src/logo.png" alt="가는길에 메인로고" draggable="false" />
             </div>
             <div class="user-info">
                 <div class="who-how">
                     <div class="who">
                         <div class="who-dropdown">
                             <div class="who-title pointerCursor">동행과
-                                <img class="small-arrow" src="src/small_arrow.png" height="12px" width="10px"
-                                    draggable="false" /></div>
+                                <img class="small-arrow" src="src/small_arrow.png" alt="" draggable="false" /></div>
                             <div class="who-menu pointerCursor hide">
                                 <div class="who-option" id="couple">연인과</div>
                                 <div class="who-option" id="family">가족과</div>
@@ -71,8 +74,7 @@
                     <div class="how">
                         <div class="how-dropdown">
                             <div class="how-title pointerCursor">교통수단
-                                <img class="small-arrow" src="src/small_arrow.png" height="12px" width="10px"
-                                    draggable="false" /></div>
+                                <img class="small-arrow" src="src/small_arrow.png" alt="" draggable="false" /></div>
                             <div class="how-menu pointerCursor hide">
                                 <div class="how-option" id="car">자가용(택시)</div>
                                 <div class="how-option" id="bus">대중교통</div>
@@ -95,13 +97,36 @@
                 </div>
                 <div class="blank"></div>
                 <div class="blank"></div>
-                <div class="where">
-                    <div class="where-dropdown">
-                        <div class="where-title pointerCursor">
-                            <input type="text" id="where-input" placeholder="어느 지역으로"
-                                onchange="activateWhereAnimation()" />
+                <div class="where click-in">
+                    <div class="where-container click-in">
+                        <div class="where-dropdown click-in">
+                            <div class="where-title pointerCursor click-in">
+                                <input type="text" id="where-input" class="click-in" placeholder="어느 지역으로"
+                                    onchange="activateWhereAnimation()" />
+                            </div>
                         </div>
+                        <ul id="search-result" class="click-in" name="search-result">
+                            <!-- <li id="search-item-li">
+                                <div id="search-item">
+                                    <div id="search-name">부산광역시</div>
+                                    <div id="search-latlng">
+                                        <div id="search-lat">38.0000000 </div>
+                                        <div id="search-lng">33.0000000 </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li id="search-item-li">
+                                <div id="search-item">
+                                    <div id="search-name">대구광역시</div>
+                                    <div id="search-latlng">
+                                        <div id="search-lat">38.0000000 </div>
+                                        <div id="search-lng">33.0000000 </div>
+                                    </div>
+                                </div>
+                            </li> -->
+                        </ul>
                     </div>
+
                     <div class="blank"></div>
                     <div class="where-text">가는길에</div>
                 </div>
@@ -111,7 +136,8 @@
                 갈만한 곳을 알고 싶어요
             </div>
             <div class="blank-2"></div>
-            <button class="btn-start" type="submit" onClick="location.href='index.html'">START</button>
+            <button class="btn-start" type="submit" onClick="location.href='search.html'"
+                alt="장소검색페이지 이동버튼">START</button>
         </div>
 
     </div>
