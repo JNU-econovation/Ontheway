@@ -1,3 +1,15 @@
+$.ajax({
+	method: "GET",
+	url: "/map",
+    async: true,
+    success: function(response) {
+		console.log('data: ', response);
+    },
+    error:function(request,status,error){
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    }
+})
+
 var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 var options = {
 	center: new Tmapv2.LatLng(37.570028, 126.986072),

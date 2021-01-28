@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
@@ -11,10 +11,13 @@ def search():
 
 @app.route('/map', methods=['POST', 'GET'])
 def map():
-    # if request.method == 'POST':
-    #     data = request.form[]
-    
-    return render_template('map.html')
+    if request.method == 'POST':
+        # print(request.form['item[who]'])
+
+        return render_template('map.html', data = "hi")
+    elif request.method == 'GET':
+
+        return render_template('map.html')
 
 @app.route('/result', methods=['POST', 'GET'])
 def result():
