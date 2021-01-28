@@ -27,6 +27,23 @@ function addRemoveFunctionToBtn() {
     }
 }
 
+function goToMap() {
+    $.ajax({
+        method: "POST",
+        url: "/map",
+        async: true,
+        data: {
+            clicked_items
+        },
+        success: function (response) {
+            window.location.href = '/map';
+        },
+        // error: function (request, status, error) {
+        //     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        // }
+    })
+}
+
 // API 연결
 $("#searchKeyword").keydown(function (key) {
     if (key.keyCode == 13) {
@@ -36,7 +53,7 @@ $("#searchKeyword").keydown(function (key) {
             url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
             async: false,
             data: {
-                "appKey": "발급받은 키",
+                "appKey": "발급받은키",
                 "searchKeyword": searchKeyword,
                 "resCoordType": "EPSG3857",
                 "reqCoordType": "WGS84GEO",
@@ -141,3 +158,4 @@ $('html').click(function (e) {
         }
     }
 });
+

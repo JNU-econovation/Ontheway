@@ -1,18 +1,3 @@
-@font-face {
-    font-family: "NotoSans-R";
-    src: url("../fonts/NotoSansKR-Regular.otf");
-}
-
-@font-face {
-    font-family: "NotoSans-M";
-    src: url("../fonts/NotoSansKR-Medium.otf");
-}
-
-@font-face {
-    font-family: "NotoSans-B";
-    src: url("../fonts/NotoSansKR-Bold.otf");
-}
-
 html {
     font-size: 16px;
 }
@@ -172,11 +157,13 @@ section {
 #search-lat {
     font-size: 0.3rem;
     color: white;
+    display: none;
 }
 
 #search-lng {
     font-size: 0.3rem;
     color: white;
+    display: none;
 }
 
 .places-blank {

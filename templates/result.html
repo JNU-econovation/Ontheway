@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가는길에</title>
+    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은키"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+    <style>
+        @font-face {
+            font-family: "NotoSans-R";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Regular.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-M";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Medium.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-B";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Bold.otf') }}");
+        }
+
+        #location-item {
+            width: 17rem;
+            height: 16rem;
+            background-image: url("{{ url_for('static', filename='/src/location_box.png') }}");
+            background-size: 100% 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 4%;
+            padding-left: 1.5%;
+        }
+
+        .btn-restart {
+            background-image: url("{{ url_for('static', filename='/src/btn_restart.png') }}");
+            height: 3.75rem;
+            width: 3.75rem;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="btn-logo" onClick="location.href='/'">
+            <img src="{{ url_for('static', filename='src/mini_logo.png') }}">
+        </button>
+        <button id="btn-help">
+            <img src="{{ url_for('static', filename='src/btn_help.png') }}" draggable="false">
+        </button>
+    </header>
+    <section>
+        <div id="locations-container">
+            <!-- <div id="location-item">
+                <div id="location-text">
+                    <div id="location-index">첫번째 장소.</div>
+                    <div class="blank_2"></div>
+                    <div id="location-name">해성막창 엘시티점</div>
+                </div>
+                <div class="visiting-time">머무는 시간</div>
+                <div id="location-time">월-토 17:00 ~ 03:00</div>
+                <div class="location-blank"></div>
+                <div class="location-map"></div>
+            </div> !-->
+        </div>
+        <div class="blank"></div>
+        <div class="buttons-container">
+            <button class="btn-restart" onClick="location.href='/'"></button>
+            <div class="blank_2"></div>
+            <button id="btn-final">일정공유</button>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/result.js') }}"></script>
+</body>
+
+</html>

@@ -6,21 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가는길에</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx776550556a074246a28571676aa85c40"></script>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/search.css">
+    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은키"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+    <style>
+        @font-face {
+            font-family: "NotoSans-R";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Regular.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-M";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Medium.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-B";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Bold.otf') }}");
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <button id="btn-help" alt="가는길에 웹서비스 설명버튼">
-            <img src="src/btn_help.png" alt="" draggable="false">
+            <img src="{{ url_for('static', filename='src/btn_help.png') }}" alt="" draggable="false">
         </button>
     </header>
     <section>
         <div class="main">
             <div class="logo">
-                <img src="src/logo.png" alt="가는길에 메인로고" draggable="false" />
+                <img src="{{ url_for('static', filename='src/logo.png') }}" alt="가는길에 메인로고" draggable="false" />
             </div>
             <div class="main_blank"></div>
             <div class="places-container">
@@ -51,16 +67,16 @@
             </div>
             <div class="main_blank_2"></div>
             <div id="speech_bubble">
-                <img src="src/speech_bubble.png" alt="">
+                <img src="{{ url_for('static', filename='src/speech_bubble.png') }}" alt="">
             </div>
-            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onClick="location.href='result.html'"
-                onmouseover="showSpeechBubble()" onmouseout="hideSpeechBubble()">
+            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onclick="goToMap()" onmouseover="showSpeechBubble()"
+                onmouseout="hideSpeechBubble()">
                 <span>다음단계</span>
-                <img src="src/small_arrow_right.png" alt="" />
+                <img src="{{ url_for('static', filename='src/small_arrow_right.png') }}" alt="" />
             </button>
         </div>
     </section>
-    <script src="js/search.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/search.js') }}"></script>
 </body>
 
 </html>

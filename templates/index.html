@@ -5,60 +5,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가는길에</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
     <!--  Flatpickr  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/light.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은키"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/flatpickr.js"></script>
+    <style>
+        @font-face {
+            font-family: "NotoSans-R";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Regular.otf') }}");
+        }
 
+        @font-face {
+            font-family: "NotoSans-M";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Medium.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-B";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Bold.otf') }}");
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <button id="btn-help">
-            <img src="src/btn_help.png" alt="가는길에 웹서비스 설명버튼" draggable="false">
+            <img src="{{ url_for('static', filename='src/btn_help.png') }}" alt="가는길에 웹서비스 설명버튼" draggable="false">
         </button>
     </header>
     <div class="interactive">
         <div class="moving-donut">
-            <img class="img-moving-donut" src="src/blue_donut.png" alt="" draggable="false" />
+            <img class="img-moving-donut" src="{{ url_for('static', filename='src/blue_donut.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="moving-smile-1">
-            <img class="img-moving-smile-1" src="src/smile1.png" alt="" draggable="false" />
+            <img class="img-moving-smile-1" src="{{ url_for('static', filename='src/smile1.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="moving-smile-2">
-            <img class="img-moving-smile-2" src="src/smile2.png" alt="" draggable="false" />
+            <img class="img-moving-smile-2" src="{{ url_for('static', filename='src/smile2.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="pink-star-1">
-            <img class="img-pink-star-1" src="src/pink_star_1.png" alt="" draggable="false" />
+            <img class="img-pink-star-1" src="{{ url_for('static', filename='src/pink_star_1.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="pink-star-2">
-            <img class="img-pink-star-2" src="src/pink_star_2.png" alt="" draggable="false" />
+            <img class="img-pink-star-2" src="{{ url_for('static', filename='src/pink_star_2.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="moving-smile-3">
-            <img class="img-moving-smile-3" src="src/smile3.png" alt="" draggable="false" />
+            <img class="img-moving-smile-3" src="{{ url_for('static', filename='src/smile3.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="green-arrow">
-            <img class="img-green-arrow" src="src/green_arrow.png" alt="" draggable="false" />
+            <img class="img-green-arrow" src="{{ url_for('static', filename='src/green_arrow.png') }}" alt=""
+                draggable="false" />
         </div>
         <div class="moving-smile-4">
-            <img class="img-moving-smile-4" src="src/smile4.png" alt="" draggable="false" />
+            <img class="img-moving-smile-4" src="{{ url_for('static', filename='src/smile4.png') }}" alt=""
+                draggable="false" />
         </div>
     </div>
     <div class="main-container">
         <div class="main">
             <div class="logo">
-                <img src="src/logo.png" alt="가는길에 메인로고" draggable="false" />
+                <img src="{{ url_for('static', filename='src/logo.png') }}" alt="가는길에 메인로고" draggable="false" />
             </div>
             <div class="user-info">
                 <div class="who-how">
                     <div class="who">
                         <div class="who-dropdown">
                             <div class="who-title pointerCursor">동행과
-                                <img class="small-arrow" src="src/small_arrow.png" alt="" draggable="false" /></div>
+                                <img class="small-arrow" src="{{ url_for('static', filename='src/small_arrow.png') }}"
+                                    alt="" draggable="false" /></div>
                             <div class="who-menu pointerCursor hide">
                                 <div class="who-option" id="couple">연인과</div>
                                 <div class="who-option" id="family">가족과</div>
@@ -74,7 +98,8 @@
                     <div class="how">
                         <div class="how-dropdown">
                             <div class="how-title pointerCursor">교통수단
-                                <img class="small-arrow" src="src/small_arrow.png" alt="" draggable="false" /></div>
+                                <img class="small-arrow" src="{{ url_for('static', filename='src/small_arrow.png') }}"
+                                    alt="" draggable="false" /></div>
                             <div class="how-menu pointerCursor hide">
                                 <div class="how-option" id="car">자가용(택시)</div>
                                 <div class="how-option" id="bus">대중교통</div>
@@ -136,14 +161,13 @@
                 갈만한 곳을 알고 싶어요
             </div>
             <div class="blank-2"></div>
-            <button class="btn-start" type="submit" onClick="location.href='search.html'"
-                alt="장소검색페이지 이동버튼">START</button>
+            <button class="btn-start" type="submit" onClick="location.href='/search'" alt="장소검색페이지 이동버튼">START</button>
         </div>
 
     </div>
     </div>
 
-    <script src="js/index.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 
 </html>
