@@ -50,10 +50,10 @@ class AutoComplete(WordTrie):
 
         output = dict()
         for i in range(len(suggestions)):
-            data_one = { 'name' : suggestions[i][0],
-                         'lang' : suggestions[i][1][0],
-                         'long' : suggestions[i][1][0],}
-            output[i] = suggestions[i]
+            data_one = { 'name' : suggestions[i][0], # 장소이름
+                         'lat' : float(suggestions[i][1].split(',')[0][1:].strip()), # 위도
+                         'lng' : float(suggestions[i][1].split(',')[1][:-1].strip())} # 경도
+            output[i] = data_one
 
         return output
 
