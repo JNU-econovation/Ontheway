@@ -1,15 +1,26 @@
 from flask import Flask, render_template, request, redirect
-app = Flask(__name__)
+import search
+import json
 
-@app.route('/', methods=['POST', 'GET'])
+search_attraction = search.Search()
+
+app = Flask(__name__)
+@app.route('/', methods=['POST', 'GET']) # 1번째 페이지
 def home():
     return render_template('index.html')
 
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST', 'GET']) # 2번째 페이지
 def search():
-    return render_template('search.html')
+    if request.method =='GET':
+        return render_template('search.html')
+    elif request.method =='POST':
+        print('post 실행')
+        keyword = request.form['searchKeyword']
+        print(keyword)
+        suggestions = search_attraction.suggest(keyword)
+        return suggestions
 
-@app.route('/map', methods=['POST', 'GET'])
+@app.route('/map', methods=['POST', 'GET']) # 3번째 페이지
 def map():
     if request.method == 'POST':
         # print(request.form['item[who]'])
@@ -19,7 +30,7 @@ def map():
 
         return render_template('map.html')
 
-@app.route('/result', methods=['POST', 'GET'])
+@app.route('/result', methods=['POST', 'GET']) # 4번째 페이지
 def result():
     return render_template('result.html')
 

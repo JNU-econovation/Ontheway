@@ -48,31 +48,21 @@ function goToMap() {
 $("#searchKeyword").keydown(function (key) {
     if (key.keyCode == 13) {
         let searchKeyword = $('#searchKeyword').val();
+        console.log(searchKeyword);
         $.ajax({
-            method: "GET",
-            url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
+            method: "POST",
+            url: "/search", //"https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
             async: false,
             data: {
-                "appKey": "발급받은키",
-                "searchKeyword": searchKeyword,
-                "resCoordType": "EPSG3857",
-                "reqCoordType": "WGS84GEO",
-                "count": 10
+                "searchKeyword": searchKeyword
             },
             success: function (response) {
-                let resultpoisData = response.searchPoiInfo.pois.poi;
+                let resultpoisData = response;
+                console.log(resultpoisData)
                 for (let k in resultpoisData) {
                     // 위도, 경도, 이름 받아온다.
-                    let noorLat = Number(resultpoisData[k].noorLat);
-                    let noorLon = Number(resultpoisData[k].noorLon);
-                    let name = resultpoisData[k].name;
-
-                    let pointCng = new Tmapv2.Point(noorLon, noorLat);
-                    let projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
-
-                    let lat = projectionCng._lat;
-                    let lon = projectionCng._lng;
-
+                    let name = resultpoisData[k];
+                    console.log(name);
                     const search_result = document.getElementById('search-result');
                     let search_item_li = document.createElement('li');
                     let search_item = document.createElement('div');
@@ -82,17 +72,11 @@ $("#searchKeyword").keydown(function (key) {
                     search_item_li.id = 'search-item-li';
                     search_item.id = 'search-item';
                     search_name.id = 'search-name';
-                    search_lat.id = 'search-lat';
-                    search_lng.id = 'search-lng';
 
                     search_result.appendChild(search_item_li);
                     search_item_li.appendChild(search_item);
                     search_item.appendChild(search_name);
-                    search_item.appendChild(search_lat);
-                    search_item.appendChild(search_lng);
                     search_name.innerHTML = name;
-                    search_lat.innerHTML = ',' + lat;
-                    search_lng.innerHTML = ',' + lon;
                 }
             }
         })
@@ -102,23 +86,16 @@ $("#searchKeyword").keydown(function (key) {
 
 // jquery에서는 동적으로 생성된 객체에 이벤트 걸 때 이렇게 한다.
 $(document).on("click", "#search-item", function () {
-    // 클릭한 객체의 이름, lat, lon 받아오기 
+    // 클릭한 객체의 이름, lat, lon 받아오기
     // 이름은 총 ㅁ곳, ㅇㅇ에 출력하게 두고
     // lat, lon 배열에 list로 담기
 
     let search_item_li = $(this).text(); // html 텍스트를 한번에 받는다.
     let search_item_info = {
-        name: '',
-        lat: 0,
-        lon: 0,
+        name: ''
     }
     // 임시 배열에 ,로 나눈 값을 담는다.
     let temp = [];
-    temp.push(search_item_li.split(','));
-    search_item_info.name = temp[0][0];
-    search_item_info.lat = Number(temp[0][1]);
-    search_item_info.lon = Number(temp[0][2]);
-    clicked_items.push(search_item_info);
 
     // html 구조 및 관계를 만들어준다.
     let total_sum = clicked_items.length;
@@ -158,4 +135,3 @@ $('html').click(function (e) {
         }
     }
 });
-
