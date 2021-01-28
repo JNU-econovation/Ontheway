@@ -91,7 +91,7 @@ ul {
     margin: 0;
     padding: 0;
     padding-left: 25px;
-    font-size: 14px;
+    font-size: 16px;
 }
 #searchbox #search input:focus {
     outline: none;
@@ -163,7 +163,8 @@ ul {
     position: absolute;
     top: 70px;
     right: 30px;
-    width: 350px;
+    min-width: 350px;
+    width: fit-content;
     height: 80px;
     display: flex;
     flex-direction: column;
@@ -206,7 +207,8 @@ ul {
     position: absolute;
     top: 180px;
     right: 30px;
-    width: 350px;
+    min-width: 350px;
+    width: fit-content;
     height: fit-content;
     background: #ffffff;
     border: solid 1px #000000;
@@ -313,7 +315,8 @@ ul {
     height: fit-content;
     min-height: 70px;
     max-height: 220px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 #schedule .reclist ul li {
     position: relative;
@@ -328,12 +331,6 @@ ul {
     justify-content: flex-start;
     align-items: center;
 }
-#schedule .reclist ul li .recimg {
-    position: relative;
-    float: left;
-    width: 17%;
-    height: auto;
-}
 #schedule .reclist ul li .recinfo {
     position: relative;
     float: left;
@@ -345,14 +342,6 @@ ul {
 }
 #schedule .reclist ul li .recinfo span {
     font-size: 15px;
-}
-#schedule .reclist ul li .plusbtn {
-    position: relative;
-    float: left;
-    width: 5%;
-    height: auto;
-    vertical-align: middle;
-    cursor: pointer;
 }
 #completebtn {
     position: relative;
@@ -384,14 +373,23 @@ ul {
     width: 100%;
     height: fit-content;
     /* border:solid 1px #FF005C; */
+    border-left: solid 1px #b2b2b2;
+    border-right: solid 1px #b2b2b2;
+
 }
 #searchres ul li {
-    width: 100%;
+    width: 95%;
     height: 32px;
-    padding-left: 25px;
+    padding-left: 5%;
     border-bottom: solid 1px #b2b2b2;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    overflow-x: hidden;
+    font-size: 14px;
+    color: rgb(99, 99, 99);
+}
+#searchres ul li:hover {
+    color: #000000;
 }

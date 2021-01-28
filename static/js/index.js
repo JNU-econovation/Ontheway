@@ -97,50 +97,109 @@ function activateWhereAnimation() {
 
 }
 
+function removeList() {
+    let listEl = document.getElementById("search-result");
+  
+    while (listEl.hasChildNodes()) {
+      listEl.removeChild(listEl.firstChild);
+    }
+}
+
+$("#where-input").on("paste keyup click", function () {
+    let searchKeyword = $(this).val();
+
+    if (searchKeyword.replace(/^s+|\s+$/g, "").length == 0) {
+      removeList();
+      return;
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "/api/search", //"https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
+        async: false,
+        data: {
+            "searchKeyword": searchKeyword
+        },
+        success: function (response) {
+            removeList();
+            let resultpoisData = response;
+            console.log(resultpoisData);
+            for (let k in resultpoisData) {
+                // 위도, 경도, 이름 받아온다.
+                let lat = Number(resultpoisData[k].lat);
+                let lon = Number(resultpoisData[k].lng);
+                let name = resultpoisData[k].name;
+
+                const search_result = document.getElementById('search-result');
+                let search_item_li = document.createElement('li');
+                search_item_li.id = 'search-item-li';
+                search_item_li.innerHTML = "<div id='search-item'><div id='search-name'>"
+                    + name + "</div><div id='search-latlng'><div id='search-lat'>,"
+                    + lat + "</div><div id='search-lng'>,"
+                    + lon + "</div></div></div>";
+
+                let search_item = search_item_li.getElementsByTagName('div');
+                for (item of search_item) {
+                    $(item).on("click", function() {
+                        console.log('onclick');
+                        document.getElementById('where-input').value = name;
+                    });
+                    break;
+                }
+                search_result.appendChild(search_item_li);
+        }
+        },
+        error:function(request, status, error) {
+            removeList();
+            console.log(error);
+        }
+    })
+});
+
 
 
 // API 연결
-$("#where-input").keydown(function (key) {
-    if (key.keyCode == 13) {
-        let searchKeyword = $('#where-input').val();
-        $.ajax({
-            method: "GET",
-            url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
-            async: false,
-            data: {
-                "appKey": "발급받은키",
-                "searchKeyword": searchKeyword,
-                "resCoordType": "EPSG3857",
-                "reqCoordType": "WGS84GEO",
-                "count": 5
-            },
-            success: function (response) {
-                let resultpoisData = response.searchPoiInfo.pois.poi;
-                for (let k in resultpoisData) {
-                    // 위도, 경도, 이름 받아온다.
-                    let noorLat = Number(resultpoisData[k].noorLat);
-                    let noorLon = Number(resultpoisData[k].noorLon);
-                    let name = resultpoisData[k].name;
+// $("#where-input").keydown(function (key) {
+//     if (key.keyCode == 13) {
+//         let searchKeyword = $('#where-input').val();
+//         $.ajax({
+//             method: "GET",
+//             url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
+//             async: false,
+//             data: {
+//                 "appKey": "발급받은키",
+//                 "searchKeyword": searchKeyword,
+//                 "resCoordType": "EPSG3857",
+//                 "reqCoordType": "WGS84GEO",
+//                 "count": 5
+//             },
+//             success: function (response) {
+//                 let resultpoisData = response.searchPoiInfo.pois.poi;
+//                 for (let k in resultpoisData) {
+//                     // 위도, 경도, 이름 받아온다.
+//                     let noorLat = Number(resultpoisData[k].noorLat);
+//                     let noorLon = Number(resultpoisData[k].noorLon);
+//                     let name = resultpoisData[k].name;
 
-                    let pointCng = new Tmapv2.Point(noorLon, noorLat);
-                    let projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
+//                     let pointCng = new Tmapv2.Point(noorLon, noorLat);
+//                     let projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
 
-                    let lat = projectionCng._lat;
-                    let lon = projectionCng._lng;
+//                     let lat = projectionCng._lat;
+//                     let lon = projectionCng._lng;
 
-                    const search_result = document.getElementById('search-result');
-                    let search_item_li = document.createElement('li');
-                    search_item_li.id = 'search-item-li';
-                    search_item_li.innerHTML = "<div id='search-item'><div id='search-name'>"
-                        + name + "</div><div id='search-latlng'><div id='search-lat'>,"
-                        + lat + "</div><div id='search-lng'>,"
-                        + lon + "</div></div></div>"
-                    search_result.appendChild(search_item_li);
-                }
-            }
-        })
-    }
-});
+//                     const search_result = document.getElementById('search-result');
+//                     let search_item_li = document.createElement('li');
+//                     search_item_li.id = 'search-item-li';
+//                     search_item_li.innerHTML = "<div id='search-item'><div id='search-name'>"
+//                         + name + "</div><div id='search-latlng'><div id='search-lat'>,"
+//                         + lat + "</div><div id='search-lng'>,"
+//                         + lon + "</div></div></div>"
+//                     search_result.appendChild(search_item_li);
+//                 }
+//             }
+//         })
+//     }
+// });
 
 let clicked_location = [];
 // jquery에서는 동적으로 생성된 객체에 이벤트 걸 때 이렇게 한다.
@@ -183,9 +242,6 @@ $('html').click(function (e) {
         search_result.css('visibility', 'inherit');
         if (search_item_length.length == 0) {
             search_result.css('height', '0rem');
-        }
-        for (let li in search_item_length) {
-            $('#search-item-li').remove();
         }
     }
 });
