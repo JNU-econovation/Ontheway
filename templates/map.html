@@ -40,6 +40,20 @@
             background-image: url({{ url_for('static', filename='src/plus.png') }});
             background-size: cover;
         }
+        #share {
+            cursor: pointer;
+        }
+
+        .share-before {
+            border: 1px solid black;
+            background-image: url({{ url_for('static', filename='src/btn_share.png') }});
+            background-size: 100% 100%;
+        }
+
+        .share-after {
+            background-image: url({{ url_for('static', filename='src/btn_share_finish.png') }});
+            background-size: 100% 100%;
+        }
     </style>
 </head>
 <body style="max-width: 925px;">
@@ -66,7 +80,7 @@
             <div class="icon" id="calendar"><img src="{{ url_for('static', filename='src/calendar.png') }}"></div>
             <div class="icon" id="car"><img src="{{ url_for('static', filename='src/car.png') }}"></div>
             <div class="icon" id="smile"><img src="{{ url_for('static', filename='src/smile.png') }}"></div>
-            <div class="icon" id="keep"><img src="{{ url_for('static', filename='src/keep.png') }}"></div>
+            <div class="icon" id="share"><img id="btn-share" class="share-before"></div>
         </div>
     </div>
     <div class="info">
@@ -137,6 +151,7 @@
             let listEl = document.getElementById('placeul');
             let listFragment = document.createDocumentFragment();
 
+            let cnt = 0;
             if ($.isEmptyObject(placeData)) {
 
                 let el = document.createElement('li');		
@@ -152,7 +167,6 @@
             for (var k in placeData) {
                 const placeName = placeData[k].name;
                 let newEl = document.createElement('li');
-
                 if (listFragment.childElementCount == 0) {
                     newEl.innerHTML = "<span class='point'>•</span>"
                                 + "<div class='iteminfo'>"
@@ -194,11 +208,12 @@
                 }
                 listFragment.appendChild(newEl);
 
-                var marker = new Tmapv2.Marker({
-                    position: new Tmapv2.LatLng(placeData[k].lat,placeData[k].lon), //Marker의 중심좌표 설정.
-                    icon: "{{ url_for('static', filename='src/blue_pin.png') }}", //Marker의 아이콘.
-                    map: map //Marker가 표시될 Map 설정.
-                });
+//                var marker = new Tmapv2.Marker({
+//                    position: new Tmapv2.LatLng(placeData[k].lat,placeData[k].lon), //Marker의 중심좌표 설정.
+//                    icon: "{{ url_for('static', filename='src/blue_pin.png') }}", //Marker의 아이콘.
+//                    map: map //Marker가 표시될 Map 설정.
+//                });
+                cnt++;
             }
             listEl.appendChild(listFragment);
 
@@ -218,8 +233,8 @@
                 newEl.innerHTML = "<img class='recimg' />"
                             +		"<div class='recinfo'>"
                             +			"<span id='rectitle'>"+recData[data].name+"</span>"
-                            +			"<span id='lat"+data+"' style='display: none'>"+recData[data].lat+"</span>"
-                            +			"<span id='lon"+data+"' style='display: none'>"+recData[data].lon+"</span>"
+                            +			"<span id='lat' style='display: none'>"+recData[data].lat+"</span>"
+                            +			"<span id='lon' style='display: none'>"+recData[data].lon+"</span>"
                             +		"</div>"
                             + "<img id='plusbtn' class='plusbtn' onclick='addPlaceListEvent()'/>";
 

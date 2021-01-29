@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
-import search
+import search, recPath
 import json
+import numpy
 
 search_attraction = search.Search()
 
@@ -18,6 +19,7 @@ def main():
 def map():
     if request.method == 'POST':
         res = request.get_json()
+
         return render_template('map.html', data = res)
     elif request.method == 'GET':
 
@@ -28,6 +30,18 @@ def post():
     keyword = request.form['searchKeyword']
     suggestions = search_attraction.suggest(keyword)
     return suggestions
+
+@app.route('/api/path', methods=['POST'])
+def path():
+    res = request.get_json()
+    print(res)
+    key_path, travel_min_len, path_info = recPath.rec_path(res)
+    output=dict()
+    for key in key_path:
+        idx = int(key) - 1
+        output[str(idx)] = res[str(idx)]
+
+    return {'path': output}
 
 @app.route('/result', methods=['POST', 'GET']) # 4번째 페이지
 def result():
