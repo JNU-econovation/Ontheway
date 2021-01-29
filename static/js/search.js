@@ -35,19 +35,27 @@ function addRemoveFunctionToBtn() {
 }
 */
 function goToMap() {
+    var jsonData = {};
+    for (var k in clicked_items) {
+        jsonData[k] = clicked_items[k];
+        console.log("clicked_items[k]"+clicked_items[k]);
+    }
+
+    console.log(jsonData);
     $.ajax({
-        method: "POST",
+        type: "POST",
+        contentType: "application/json",
         url: "/map",
-        async: true,
-        data: {
-            clicked_items
-        },
+        dataType: "text",
+        data: JSON.stringify(jsonData),
         success: function (response) {
-            window.location.href = '/map';
+            document.write(response);
+            
         },
-        // error: function (request, status, error) {
-        //     console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        // }
+        error: function (request, status, error) {
+            console.log(error);
+            // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
     })
 }
 
@@ -70,7 +78,7 @@ $("#searchKeyword").on("paste keyup click", function () {
 
     $.ajax({
         method: "POST",
-        url: "/search", //"https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
+        url: "/api/search", //"https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
         async: false,
         data: {
             "searchKeyword": searchKeyword

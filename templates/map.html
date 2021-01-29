@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ data }}</title>
+    <title>map</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}" />
-    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은키"></script>
+    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx314a385b47e74eb58e2bbcac9ebc53e1"></script>
     <style>
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
@@ -21,6 +21,38 @@
             color: #333;
             text-align:center;
             position:relative;
+        }
+        #schedule .reclist ul li .recimg {
+            position: relative;
+            float: left;
+            width: 60px;
+            height: 60px;
+            background-image: url({{ url_for('static', filename='src/alt_img.png') }});
+            background-size: cover;
+        }
+        #schedule .reclist ul li .plusbtn {
+            position: relative;
+            float: left;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: url({{ url_for('static', filename='src/plus.png') }});
+            background-size: cover;
+        }
+        #share {
+            cursor: pointer;
+        }
+
+        .share-before {
+            border: 1px solid black;
+            background-image: url({{ url_for('static', filename='src/btn_share.png') }});
+            background-size: 100% 100%;
+        }
+
+        .share-after {
+            background-image: url({{ url_for('static', filename='src/btn_share_finish.png') }});
+            background-size: 100% 100%;
         }
     </style>
 </head>
@@ -48,7 +80,7 @@
             <div class="icon" id="calendar"><img src="{{ url_for('static', filename='src/calendar.png') }}"></div>
             <div class="icon" id="car"><img src="{{ url_for('static', filename='src/car.png') }}"></div>
             <div class="icon" id="smile"><img src="{{ url_for('static', filename='src/smile.png') }}"></div>
-            <div class="icon" id="keep"><img src="{{ url_for('static', filename='src/keep.png') }}"></div>
+            <div class="icon" id="share"><img id="btn-share" class="share-before"></div>
         </div>
     </div>
     <div class="info">
@@ -62,13 +94,13 @@
         </div>
         <div class="content">
             <span class="date_txt">2020.01.21</span>
-            <input type="number" name="starthour" min="0" max="23" value="0">
+            <input type="number" name="starthour" min="0" max="23" value="10">
             <span>시</span>
             <input type="number" name="startmin" min="0" max="59" value="0">
             <span>분 ~ </span>
-            <input type="number" name="endhour" min="0" max="23" value="23">
+            <input type="number" name="endhour" min="0" max="23" value="22">
             <span>시</span>
-            <input type="number" name="endmin" min="0" max="59" value="59">
+            <input type="number" name="endmin" min="0" max="59" value="0">
             <span>분</span>
         </div> 
     </div>
@@ -80,65 +112,11 @@
                 <span id="actualT" class="time_txt">총 소요시간 8시간 00분</span>
             </div>
             <ul id="placeul">
-                <li class="placeitem">
-                    <span class="point">•</span>
-                    <div class="iteminfo">
-                        <span id="placename" class="placename noborder">해성막창</span>
-                        <div class="visitT noborder">
-                            <input type="number" name="visithour" min="0" max="23" value="2">
-                            <span>시간</span>
-                            <input type="number" name="visitmin" min="0" max="59" value="0">
-                            <span>분</span>    
-                        </div>
-                        <span id="removebtn" class="removebtn noborder" onclick="addRemoveEvent()">x</span>        
-                    </div>
-                </li>
-                <li class="placeitem">
-                    <span class="point">•</span>
-                    <div class="iteminfo">
-                        <span id="placename" class="placename topborder">다리집</span>
-                        <div class="visitT topborder">
-                            <input type="number" name="visithour" min="0" max="23" value="2">
-                            <span>시간</span>
-                            <input type="number" name="visitmin" min="0" max="59" value="0">
-                            <span>분</span>    
-                        </div>
-                        <span id="removebtn" class="removebtn topborder" onclick="addRemoveEvent()">x</span>        
-                    </div>
-                </li>
-                <li class="placeitem">
-                    <span class="point">•</span>
-                    <div class="iteminfo">
-                        <span id="placename" class="placename topborder">신발원</span>
-                        <div class="visitT topborder">
-                            <input type="number" name="visithour" min="0" max="23" value="2">
-                            <span>시간</span>
-                            <input type="number" name="visitmin" min="0" max="59" value="0">
-                            <span>분</span>    
-                        </div>
-                        <span id="removebtn" class="removebtn topborder" onclick="addRemoveEvent()">x</span>        
-                    </div>
-                </li>
             </ul>
         </div>
         <div class="reclist">
             <span class="title">사용자님이 좋아하실 것 같은 장소예요 🤓</span>
             <ul id="recul">
-                <li class="recitem">
-                    <img class="recimg" src="{{ url_for('static', filename='src/keep.png') }}"/>
-                    <div class="recinfo">
-                        <span id="rectitle">송정 해수욕장</span>
-                    </div>
-                    <img id="plusbtn" class="plusbtn" src="{{ url_for('static', filename='src/plus.png') }}" onclick='addPlaceListEvent()'/>
-                </li>
-                <li class="recitem">
-                    <img class="recimg" src="{{ url_for('static', filename='src/keep.png') }}"/>
-                    <div class="recinfo">
-                        <span id="rectitle">해운대 해수욕장</span>
-                    </div>
-                    <img id="plusbtn" class="plusbtn" src="{{ url_for('static', filename='src/plus.png') }}" onclick='addPlaceListEvent()'/>
-                </li>
-
             </ul>
         </div>
         <div id="completebtn">일정생성</div>
@@ -155,6 +133,138 @@
             <li class="searchitem">장소</li> -->
         </ul>
     </div>
+    <script type="text/javascript">
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = {
+            center: new Tmapv2.LatLng(37.570028, 126.986072),
+            zoom : 12,
+            zoomControl : true,
+            scrollwheel : true
+        };
+        var map = new Tmapv2.Map(container, options);
+
+        addPlaceData();
+        addRec();
+        function addPlaceData() {
+            var placeData = {{ data | tojson }};
+            
+            let listEl = document.getElementById('placeul');
+            let listFragment = document.createDocumentFragment();
+
+            let cnt = 0;
+            if ($.isEmptyObject(placeData)) {
+
+                let el = document.createElement('li');		
+                el.innerHTML = "<span>여행 장소를 선택해주세요.</span>";
+                el.id = "emptyli";
+
+                listEl.appendChild(el);
+
+                setActualTime("00", "00");
+                return;
+            }
+
+            for (var k in placeData) {
+                const placeName = placeData[k].name;
+                let newEl = document.createElement('li');
+                if (listFragment.childElementCount == 0) {
+                    newEl.innerHTML = "<span class='point'>•</span>"
+                                + "<div class='iteminfo'>"
+                                + 	"<span id='placename' class='placename noborder'>"+placeData[k].name+"</span>"
+                                +	"<span class='lat' style='display: none'>"+placeData[k].lat+"</span>"
+                                +	"<span class='lon' style='display: none'>"+placeData[k].lon+"</span>"
+                                +	"<div class='visitT noborder'>"
+                                + 		"<input type='number' name='visithour' min='0' max='23' value='2'>"
+                                +       "<span style='padding: 0px 4px;'>시간</span>"
+                                +       "<input type='number' name='visitmin' min='0' max='59' value='0'>"
+                                +       "<span style='padding-left: 4px;'>분</span>"
+                                +	"</div>"
+                                +	"<span id='removebtn' class='removebtn noborder' onclick='addRemoveEvent()'>x</span>"
+                                + "</div>";
+                }
+                else {
+                    newEl.innerHTML = "<span class='point'>•</span>"
+                                + "<div class='iteminfo'>"
+                                + 	"<span id='placename' class='placename topborder'>"+placeData[k].name+"</span>"
+                                +	"<span class='lat' style='display: none'>"+placeData[k].lat+"</span>"
+                                +	"<span class='lon' style='display: none'>"+placeData[k].lon+"</span>"
+                                +	"<div class='visitT topborder'>"
+                                + 		"<input type='number' name='visithour' min='0' max='23' value='2'>"
+                                +       "<span style='padding: 0px 4px;'>시간</span>"
+                                +       "<input type='number' name='visitmin' min='0' max='59' value='0'>"
+                                +       "<span style='padding-left: 4px;'>분</span>"
+                                +	"</div>"
+                                +	"<span id='removebtn' class='removebtn topborder' onclick='addRemoveEvent()'>x</span>"
+                                + "</div>";
+                }
+                newEl.className = "placeitem";
+
+                const inputs = newEl.getElementsByTagName("input");
+                for (let el of inputs) {
+                    $(el).on("propertychange change keyup paste input", function() {
+                        let actualT = getActualTime();
+                        setActualTime(actualT[0], actualT[1]);
+                    });
+                }
+                listFragment.appendChild(newEl);
+
+//                var marker = new Tmapv2.Marker({
+//                    position: new Tmapv2.LatLng(placeData[k].lat,placeData[k].lon), //Marker의 중심좌표 설정.
+//                    icon: "{{ url_for('static', filename='src/blue_pin.png') }}", //Marker의 아이콘.
+//                    map: map //Marker가 표시될 Map 설정.
+//                });
+                cnt++;
+            }
+            listEl.appendChild(listFragment);
+
+            let actualT = getActualTime();
+            setActualTime(actualT[0], actualT[1]);
+
+        }
+
+        function addRec() {
+            var recData = {{ data | tojson }};
+            var recListEl = document.getElementById('recul');
+            var recListFragment = document.createDocumentFragment();
+
+            for (var data in recData) {
+                console.log(recData[data].name);
+                let newEl = document.createElement('li');		
+                newEl.innerHTML = "<img class='recimg' />"
+                            +		"<div class='recinfo'>"
+                            +			"<span id='rectitle'>"+recData[data].name+"</span>"
+                            +			"<span id='lat' style='display: none'>"+recData[data].lat+"</span>"
+                            +			"<span id='lon' style='display: none'>"+recData[data].lon+"</span>"
+                            +		"</div>"
+                            + "<img id='plusbtn' class='plusbtn' onclick='addPlaceListEvent()'/>";
+
+                newEl.className = "recitem";
+            
+                recListFragment.appendChild(newEl);
+            }
+
+            recListEl.appendChild(recListFragment);
+        }
+
+        // 일정목록 속 총 소요시간
+        function getActualTime() {
+            let totalH = 0, totalM = 0;
+
+            $('input[name=visithour]').each(function() {
+                totalH += Number($(this).val());
+            });
+            $('input[name=visitmin]').each(function() {
+                totalM += Number($(this).val());
+            });
+            
+            return [totalH, totalM];
+        }
+
+        function setActualTime(hour, min) {
+            $("#actualT").text("총 소요시간 " + hour + "시간 " + min + "분");
+        }
+
+    </script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}"></script>
 </body>
 </html>

@@ -150,31 +150,31 @@ def construct_matrix(poses):
 
     return matrix, matrix_info
 
-def pick_path_info(matrix_info, places, opt_path):
+def pick_path_info(matrix_info, opt_path):
     path_info = list()
-    path_places = list()
     for i in range(len(opt_path)-1):
         node = opt_path[i]-1
         next_node = opt_path[i+1]-1
         path_info.append(matrix_info[node][next_node])
-        path_places.append(places[node])
-    return path_info, path_places
+        # path_places.append(places[node])
+    return path_info
 
 def rec_path(data):
     data = list(data.values())
     places = np.array([x['name'] for x in data])
-    poses = np.array([[x['lat'], x['lon']] for x in data])
+    poses = np.array([[float(x['lat']), float(x['lon'])] for x in data])
     matrix, matrix_info = construct_matrix(poses)
     travel = Travel()
     travel.calculate(matrix)
-    path_info, path_places = pick_path_info(matrix_info, places, travel.opt_path)
-    print(path_places)
-    return path_places, travel.min_length, path_info # 경로, 최소시간, 경로 정보
+    path_info = pick_path_info(matrix_info, travel.opt_path)
+    opt_path = [str(x) for x in travel.opt_path]
+    # print(path_places)
+    return opt_path, travel.min_length, path_info # 경로, 최소시간, 경로 정보
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    data = {'0': {'name': '완도 수목원', 'lat': 34.3606378, 'lon': 126.6622321}, '1': {'name': '완도 청해포구촬영장', 'lat': 34.4180885, 'lon': 126.6303609}, '2': {'name': '완도타워', 'lat': 34.3107464, 'lon': 126.7644206}, }
+#     data = {'0': {'name': '완도 수목원', 'lat': 34.3606378, 'lon': 126.6622321}, '1': {'name': '완도 청해포구촬영장', 'lat': 34.4180885, 'lon': 126.6303609}, '2': {'name': '완도타워', 'lat': 34.3107464, 'lon': 126.7644206}, }
 
-    path_places, travel_min_length, path_info = rec_path(data)
-    print("경로 =",path_places)
-    print("걸리는 시간 =",travel_min_length)
+#     path_places, travel_min_length, path_info = rec_path(data)
+#     print("경로 =",path_places)
+#     print("걸리는 시간 =",travel_min_length)
