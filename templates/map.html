@@ -27,7 +27,7 @@
             float: left;
             width: 60px;
             height: 60px;
-            background-image: url({{ url_for('static', filename='src/keep.png') }});
+            background-image: url({{ url_for('static', filename='src/alt_img.png') }});
             background-size: cover;
         }
         #schedule .reclist ul li .plusbtn {
@@ -80,13 +80,13 @@
         </div>
         <div class="content">
             <span class="date_txt">2020.01.21</span>
-            <input type="number" name="starthour" min="0" max="23" value="0">
+            <input type="number" name="starthour" min="0" max="23" value="10">
             <span>시</span>
             <input type="number" name="startmin" min="0" max="59" value="0">
             <span>분 ~ </span>
-            <input type="number" name="endhour" min="0" max="23" value="23">
+            <input type="number" name="endhour" min="0" max="23" value="22">
             <span>시</span>
-            <input type="number" name="endmin" min="0" max="59" value="59">
+            <input type="number" name="endmin" min="0" max="59" value="0">
             <span>분</span>
         </div> 
     </div>
@@ -130,7 +130,7 @@
         var map = new Tmapv2.Map(container, options);
 
         addPlaceData();
-
+        addRec();
         function addPlaceData() {
             var placeData = {{ data | tojson }};
             
@@ -157,8 +157,8 @@
                     newEl.innerHTML = "<span class='point'>•</span>"
                                 + "<div class='iteminfo'>"
                                 + 	"<span id='placename' class='placename noborder'>"+placeData[k].name+"</span>"
-                                +	"<span id='lat"+k+"' style='display: none'>"+placeData[k].lat+"</span>"
-                                +	"<span id='lon"+k+"' style='display: none'>"+placeData[k].lon+"</span>"
+                                +	"<span class='lat' style='display: none'>"+placeData[k].lat+"</span>"
+                                +	"<span class='lon' style='display: none'>"+placeData[k].lon+"</span>"
                                 +	"<div class='visitT noborder'>"
                                 + 		"<input type='number' name='visithour' min='0' max='23' value='2'>"
                                 +       "<span style='padding: 0px 4px;'>시간</span>"
@@ -172,8 +172,8 @@
                     newEl.innerHTML = "<span class='point'>•</span>"
                                 + "<div class='iteminfo'>"
                                 + 	"<span id='placename' class='placename topborder'>"+placeData[k].name+"</span>"
-                                +	"<span id='lat"+k+"' style='display: none'>"+placeData[k].lat+"</span>"
-                                +	"<span id='lon"+k+"' style='display: none'>"+placeData[k].lon+"</span>"
+                                +	"<span class='lat' style='display: none'>"+placeData[k].lat+"</span>"
+                                +	"<span class='lon' style='display: none'>"+placeData[k].lon+"</span>"
                                 +	"<div class='visitT topborder'>"
                                 + 		"<input type='number' name='visithour' min='0' max='23' value='2'>"
                                 +       "<span style='padding: 0px 4px;'>시간</span>"

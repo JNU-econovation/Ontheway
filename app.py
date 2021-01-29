@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import search
 import json
+
 search_attraction = search.Search()
 
 app = Flask(__name__)

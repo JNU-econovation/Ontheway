@@ -1,33 +1,16 @@
-// var recData = [
-// 	{
-// 		name: '송정 해수욕장',
-// 		lat: 0,
-// 		lon : 0
-// 	},
-// 	{
-// 		name: '광안리 해수욕장',
-// 		lat: 1,
-// 		lon: 2
-// 	}
-// ]
-
-// $.ajax({
-// 	method: "GET",
-// 	url: "/map",
-//     async: true,
-//     success: function(response) {
-// 		console.log('data: ', response);
-//     },
-//     error:function(request,status,error){
-//         console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-//     }
-// })
-
 var markerArr = [];
 var infoWindow;
 
 // var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+var map = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+// var options = {
+// 	center: new Tmapv2.LatLng(37.570028, 126.986072),
+// 	zoom : 12,
+// 	zoomControl : true,
+// 	scrollwheel : true
+// };
+// var map = new Tmapv2.Map(container, options);
+
 // $("#placeul .placeitem #removebtn").click();	
 let actualT = getActualTime();
 setActualTime(actualT[0], actualT[1]);
@@ -56,45 +39,7 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 		console.log('show_start: ' + keyword);
 		$("#searchres").show();
 	}
-	// tmap api 연결
-	// $.ajax({
-	// 	method: "GET",
-	// 	url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
-	// 	async: true,
-	// 	data: {
-	// 		"appKey" : "l7xx314a385b47e74eb58e2bbcac9ebc53e1",
-	// 		"searchKeyword" : keyword,
-	// 		"resCoordType" : "EPSG3857",
-	// 		"reqCoordType" : "WGS84GEO",
-	// 		"count" : 10
-	// 	},
-	// 	success: function(response) {
-	// 		let listEl = document.getElementById("searchul");
-	// 		removeAllChilds();
-			
-	// 		try {
-	// 			var resultpoisData = response.searchPoiInfo.pois.poi;
-	// 			let liFragment = document.createDocumentFragment();
 
-	// 			for (var k in resultpoisData) {
-	// 				let name = resultpoisData[k].name;
-	// 				let newEl = document.createElement("li");
-	// 				newEl.className = "serachitem";
-	// 				newEl.innerHTML = name;
-	// 				liFragment.appendChild(newEl);	
-	// 			}
-	
-	// 			listEl.appendChild(liFragment);
-	// 		} catch {
-				
-	// 		}
-
-	// 	},
-	// 	error:function(request,status,error){
-	// 		removeAllChilds();
-	// 		console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	// 	}
-	// });
 	$.ajax({
 		method: "POST",
 		url: "/api/search",
@@ -112,17 +57,34 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 
 				for (var k in resultpoisData) {
 					let name = resultpoisData[k].name;
-					var markerPosition = new Tmapv2.LatLng(resultpoisData[k].lat, resultpoisData[k].lon);
+					console.log(resultpoisData[k].lat, resultpoisData[k].lng);
+					var markerPosition = new Tmapv2.LatLng(resultpoisData[k].lat, resultpoisData[k].lng);
 
 					let newEl = document.createElement("li");
 					newEl.className = "serachitem";
 					newEl.innerHTML = name;
-					$(newEl).on("click", function() {
-						// addMarker(name, markerPosition, )
-					});
+
+					(function(name, markerPosition) {
+						newEl.addEventListener("click", function() {
+							map.innerHTML = '';
+
+							var newMap = new Tmapv2.Map(map, {
+								center: markerPosition,
+								zoom : 17,
+								zoomControl : true,
+								scrollwheel : true
+							});
+
+							var marker = new Tmapv2.Marker({
+								position: markerPosition, //Marker의 중심좌표 설정.
+								map: newMap //Marker가 표시될 Map 설정..
+							});
+							displayInfoWindow(newMap, name, markerPosition);
+						});
+					})(name, markerPosition);
+
 					liFragment.appendChild(newEl);	
 				}
-				
 				
 				listEl.appendChild(liFragment);
 			} catch {
@@ -193,15 +155,75 @@ function addRemoveEvent() {
 	}
 }
 
+function addPlaceListFromSearch(name, lat, lon) {
+	console.log(name, lat, lon);
+	let listEl = document.getElementById('placeul');
+
+	if (listEl.childElementCount >= 12) {
+		alert("일정은 12개 이상 추가할 수 없습니다!");
+		return;
+	}
+	
+	let listFragment = document.createDocumentFragment();
+	let newEl = document.createElement('li');
+
+	if (listEl.firstElementChild.id == "emptyli") {
+		listEl.firstElementChild.remove();
+		newEl.innerHTML = "<span class='point'>•</span>"
+					+ "<div class='iteminfo'>"
+					+ 	"<span id='placename' class='placename noborder'>"+name+"</span>"
+					+	"<span id='lat' style='display: none'>"+lat+"</span>"
+					+	"<span id='lon' style='display: none'>"+lon+"</span>"
+					+	"<div class='visitT noborder'>"
+					+ 		"<input type='number' name='visithour' min='0' max='23' value='2'>"
+					+       "<span style='padding: 0px 4px;'>시간</span>"
+					+       "<input type='number' name='visitmin' min='0' max='59' value='0'>"
+					+       "<span style='padding-left: 4px;'>분</span>"
+					+	"</div>"
+					+	"<span id='removebtn' class='removebtn noborder' onclick='addRemoveEvent()'>x</span>"
+					+ "</div>";
+	}
+	else {
+		newEl.innerHTML = "<span class='point'>•</span>"
+					+ "<div class='iteminfo'>"
+					+ 	"<span id='placename' class='placename topborder'>"+name+"</span>"
+					+	"<span id='lat' style='display: none'>"+lat+"</span>"
+					+	"<span id='lon' style='display: none'>"+lon+"</span>"
+					+	"<div class='visitT topborder'>"
+					+ 		"<input type='number' name='visithour' min='0' max='23' value='2'>"
+					+       "<span style='padding: 0px 4px;'>시간</span>"
+					+       "<input type='number' name='visitmin' min='0' max='59' value='0'>"
+					+       "<span style='padding-left: 4px;'>분</span>"
+					+	"</div>"
+					+	"<span id='removebtn' class='removebtn topborder' onclick='addRemoveEvent()'>x</span>"
+					+ "</div>";
+	}
+	newEl.className = "placeitem";
+
+	const inputs = newEl.getElementsByTagName("input");
+	for (let el of inputs) {
+		$(el).on("propertychange change keyup paste input", function() {
+			let actualT = getActualTime();
+			setActualTime(actualT[0], actualT[1]);
+		});
+	}
+	listFragment.appendChild(newEl);
+	listEl.appendChild(listFragment);
+
+	let actualT = getActualTime();
+	setActualTime(actualT[0], actualT[1]);
+}
+
 function addPlaceListEvent() {
 	let listEl = document.getElementById('placeul');
 
-	if (listEl.childElementCount >= 8) {
-		alert("일정은 8개 이상 추가할 수 없습니다!");
+	if (listEl.childElementCount >= 30) {
+		alert("일정은 30개 이상 추가할 수 없습니다!");
 		return;
 	}
 
 	let eventEl = $(event.target).closest('li');
+	console.log(eventEl.children("div"));
 	const placeName = eventEl.children("div").text();
 	eventEl.remove();
 	
@@ -281,36 +303,13 @@ function setPossibleTime(hour, min) {
 	$("#possibleT").text("총 소요시간 " + hour + "시간 " + min + "분");
 }
 
-function addMarker(name, markerPosition, positionBounds) {
-	marker = new Tmapv2.Marker({
-		position : markerPosition,
-		icon : "\../src/pin_orange.png",
-		iconSize : new Tmapv2.Size(24, 38),
-		title : name,
-		map: map
-	   });
-
-	markerArr.push(marker);
-	positionBounds.extend(markerPosition);	// LatLngBounds의 객체 확장
-	
-	map.panToBounds(positionBounds);	// 확장된 bounds의 중심으로 이동시키기
-	map.setCenter(markerPosition);
-	// map.panBy(80, 0);
-	map.setZoom(19);
-}
-
-function displayInfoWindow(name, address, markerPosition) {
-	var content= "<div style='position: static; display: flex; flex-direction: column; font-size: 14px; box-shadow: 5px 5px 5px #00000040; border-radius: 10px; top: 410px; left : 800px; width : 250px; background: #FFFFFF 0% 0% no-repeat padding-box;'>"+
-					"<div class='img-box' style='position: relative; width: 100%; height: 150px; border-radius: 10px 10px 0 0 ; background: url(../src/pin_yellow.png) no-repeat center;'></div>"+
-					"<div class='info-box' style='padding: 10px;'>"+
-						"<p style='margin-bottom: 7px; overflow: hidden;'>"+
-							"<span class='tit' style=' font-size: 16px; font-weight: bold;'>"+name+"</span>"+
-						"</p>"+
-						"<ul class='ul-info'>"+
-							"<li class='li-addr' style='padding-left: 20px; margin-bottom: 5px; no-repeat top 3px left;outline: none;'>"+
-								"<p class='new-addr'>"+address+"</p>"+
-							"</li>"+
-						"</ul>"+
+function displayInfoWindow(map, name, markerPosition) {
+	var content= "<div style='position: static; display: flex; font-size: 14px; border-radius: 10px; top: 410px; left : 800px; width : 250px; background: #FFFFFF 0% 0% no-repeat padding-box;'>"+
+					"<div class='info-box' style='width: 100%; padding: 10px; position: relative; display: flex; justify-content: space-between; align-items: center;'>"+
+						"<span class='tit' style='font-size: 16px; font-weight: bold;'>"+name+"</span>"+
+						"<button style='cursor: pointer; outline: none; border: solid 1px #000000; padding: 7px 7px; text-align: center; font-size: 14px; background-color: #FFE13B' onclick=\"addPlaceListFromSearch('"+name+"',"+markerPosition.lat()+","+markerPosition.lng()+")\">"+
+							"일정에 추가"+
+						"</button>"+
 					"</div>"+
 				"</div>";
 		if (infoWindow) {
@@ -326,11 +325,3 @@ function displayInfoWindow(name, address, markerPosition) {
 		});
 }
 
-function removeMarker() {
-	// 기존 마커, 팝업 제거
-	if(markerArr.length > 0){
-		for(var i in markerArr){
-			markerArr[i].setMap(null);
-		}
-	}
-}
