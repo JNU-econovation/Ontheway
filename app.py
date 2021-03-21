@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import search, recPath
+import recommend
 import json
 import numpy
 
@@ -19,8 +20,10 @@ def main():
 def map():
     if request.method == 'POST':
         res = request.get_json()
-
-        return render_template('map.html', data = res)
+        print(res)
+        # rec = recommend.result(res)
+        rec = {'0': {'name': '경복궁', 'lat': '37.579617', 'lon': '126.974847'}, '1': {'name': '창덕궁', 'lat': '37.5823645', 'lon': '126.9907841'}, '2': {'name': '롯데월드', 'lat': '37.5125971', 'lon': '127.1003451'}, '3': {'name': '잠실종합운동장', 'lat': '37.5148406', 'lon': '127.0709184'}, '4': {'name': '잠실 야구 경기장', 'lat': '37.5122579', 'lon': '127.0697071'}}
+        return render_template('map.html', data = res, rec = rec)
     elif request.method == 'GET':
 
         return render_template('map.html')
@@ -45,6 +48,10 @@ def path():
 
 @app.route('/result', methods=['POST', 'GET']) # 4번째 페이지
 def result():
+    if request.method == "POST":
+        res = request.get_json();
+        print(res)
+        return render_template('result.html', data = res)
     return render_template('result.html')
 
 if __name__ == '__main__':

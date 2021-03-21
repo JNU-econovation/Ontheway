@@ -12,7 +12,7 @@ var container = document.getElementById('map'); //지도를 담을 영역의 DOM
 // var map = new Tmapv2.Map(container, options);
 var map;
 
-// $("#placeul .placeitem #removebtn").click();	
+// $("#placeul .placeitem #removebtn").click();
 let actualT = getActualTime();
 setActualTime(actualT[0], actualT[1]);
 
@@ -51,7 +51,7 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 		success: function(response) {
 			let listEl = document.getElementById("searchul");
 			removeAllChilds();
-			
+
 			try {
 				var resultpoisData = response;
 				let liFragment = document.createDocumentFragment();
@@ -84,12 +84,12 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 						});
 					})(map, name, markerPosition);
 
-					liFragment.appendChild(newEl);	
+					liFragment.appendChild(newEl);
 				}
-				
+
 				listEl.appendChild(liFragment);
 			} catch {
-				
+
 			}
 
 		},
@@ -131,9 +131,9 @@ function removeAllChilds() {
 function addRemoveEvent() {
 	event.target.closest('li').remove();
 	var listUl = document.getElementById('placeul');
-	
+
 	if (listUl.childElementCount == 0) {
-		let el = document.createElement('li');		
+		let el = document.createElement('li');
 		el.innerHTML = "<span>여행 장소를 선택해주세요.</span>";
 		el.id = "emptyli";
 
@@ -143,7 +143,7 @@ function addRemoveEvent() {
 	}
 	else {
 		$("#placeul li:nth-child(1)").find('.topborder').toggleClass('topborder').toggleClass('noborder');
-		
+
 		let totalH = 0, totalM = 0;
 		$('input[name=visithour]').each(function() {
 			totalH += Number($(this).val());
@@ -182,7 +182,7 @@ function addRemoveEvent() {
 		addMarker(data[k].name, markerPosition, positionBounds);
 	}
 
-	map.setZoom(5);
+	map.setCenter(new Tmapv2.LatLng(data[0].lat, data[0].lon));
 }
 
 function addPlaceListFromSearch(name, lat, lon) {
@@ -198,7 +198,7 @@ function addPlaceListFromSearch(name, lat, lon) {
 		alert("일정은 30개 이상 추가할 수 없습니다!");
 		return;
 	}
-	
+
 	let listFragment = document.createDocumentFragment();
 	let newEl = document.createElement('li');
 
@@ -265,7 +265,7 @@ function addPlaceListEvent() {
 
 	console.log(placeName + lat + lon);
 	eventEl.remove();
-	
+
 	let listFragment = document.createDocumentFragment();
 	let newEl = document.createElement('li');
 
@@ -326,7 +326,7 @@ function getActualTime() {
 	$('input[name=visitmin]').each(function() {
 		totalM += Number($(this).val());
 	});
-	
+
 	return [totalH, totalM];
 }
 
@@ -334,7 +334,7 @@ function getActualTime() {
 function getPossibleTime() {
 	let totalH = Number($('input[name=endhour]').val()) - Number($('input[name=starthour]').val());
 	let totalM = Number($('input[name=endmin]').val()) - Number($('input[name=startmin]').val());
-	
+
 	return [totalH, totalM];
 }
 
@@ -394,31 +394,51 @@ function getRecPath() {
         dataType: "json",
         data: JSON.stringify(data),
         success: function (response) {
-			var positionBounds = new Tmapv2.LatLngBounds();		//맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
-			var path = [];
+					var positionBounds = new Tmapv2.LatLngBounds();		//맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
+					var path = [];
 
-			for (var k in response['path']) {
-				var markerPosition = new Tmapv2.LatLng(response['path'][k].lat, response['path'][k].lon);
-				path.push(markerPosition);
-				addMarker(response['path'][k].name, markerPosition, positionBounds);
+					for (var k in response['path']) {
+						var markerPosition = new Tmapv2.LatLng(response['path'][k].lat, response['path'][k].lon);
+						path.push(markerPosition);
+						addMarker(response['path'][k].name, markerPosition, positionBounds);
+					}
 
-			}
+					var polyline = new Tmapv2.Polyline({
+						path: path,
+						strokeColor: "#dd00dd", // 라인 색상
+						strokeWeight: 6, // 라인 두께
+						strokeStyle: "solid", // 선의 종류
+						map: map // 지도 객체
+					});
 
-			var polyline = new Tmapv2.Polyline({
-				path: path,
-				strokeColor: "#dd00dd", // 라인 색상
-				strokeWeight: 6, // 라인 두께
-				strokeStyle: "solid", // 선의 종류
-				map: map // 지도 객체
-			});
+					map.setCenter( new Tmapv2.LatLng(response['path'][0].lat, response['path'][0].lon));
+					$("#share").click(function() {
 
-			map.setZoom(8);
+						$.ajax({
+								type: "POST",
+								contentType: "application/json",
+								url: "/result",
+								dataType: "json",
+								data: JSON.stringify(data),
+								success: function (response) {
+									// document.write(response);
+									console.log(response);
+								},
+								error: function (request, status, error) {
+										console.log("error!!", error);
+										// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+								}
+						});
+
+					});
+
         },
         error: function (request, status, error) {
             console.log("error!!", error);
             // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     })
+
 }
 
 function setShareIconFinish() {
@@ -447,14 +467,23 @@ function addMarker(name, markerPosition, positionBounds) {
 
 	markerArr.push(marker);
 	positionBounds.extend(markerPosition);	// LatLngBounds의 객체 확장
-	
+
 	map.panToBounds(positionBounds);	// 확장된 bounds의 중심으로 이동시키기
 	map.setCenter(markerPosition);
 	// map.panBy(80, 0);
-	map.setZoom(19);
 }
+
 
 $("#completebtn").click(function () {
 	setShareIconFinish();
 	getRecPath();
 })
+
+$(document).ready(function () {
+	$(".loading").fadeOut();
+});
+
+
+// $(window).on("load", function () {
+// 	$(".loading").fadeOut();
+// });

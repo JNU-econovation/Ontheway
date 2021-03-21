@@ -8,6 +8,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}" />
     <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx314a385b47e74eb58e2bbcac9ebc53e1"></script>
     <style>
+        @font-face {
+            font-family: "NotoSans-R";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Regular.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-M";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Medium.otf') }}");
+        }
+
+        @font-face {
+            font-family: "NotoSans-B";
+            src: url("{{ url_for('static', filename='/fonts/NotoSansKR-Bold.otf') }}");
+        }
+        body {
+          font-family: "NotoSans-M";
+        }
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
             appearance: none;
@@ -67,7 +84,7 @@
                 <form>
                     <fieldset class="fld_inside">
                         <input type="text" class="textbox" name="searchbox" maxlength="50" autocomplete="off" placeholder="장소를 입력하세요.">
-                        <button id="searchbtn" style="background-image: url( {{url_for('static', filename='src/search.png')}} )"></button>    
+                        <button id="searchbtn" style="background-image: url( {{url_for('static', filename='src/search.png')}} )"></button>
                     </fieldset>
                 </form>
             </div>
@@ -102,7 +119,7 @@
             <span>시</span>
             <input type="number" name="endmin" min="0" max="59" value="0">
             <span>분</span>
-        </div> 
+        </div>
     </div>
 
     <div id="schedule">
@@ -147,14 +164,14 @@
         addRec();
         function addPlaceData() {
             var placeData = {{ data | tojson }};
-            
+
             let listEl = document.getElementById('placeul');
             let listFragment = document.createDocumentFragment();
 
             let cnt = 0;
             if ($.isEmptyObject(placeData)) {
 
-                let el = document.createElement('li');		
+                let el = document.createElement('li');
                 el.innerHTML = "<span>여행 장소를 선택해주세요.</span>";
                 el.id = "emptyli";
 
@@ -223,13 +240,13 @@
         }
 
         function addRec() {
-            var recData = {{ data | tojson }};
+            var recData = {{ rec | tojson }};
             var recListEl = document.getElementById('recul');
             var recListFragment = document.createDocumentFragment();
 
             for (var data in recData) {
                 console.log(recData[data].name);
-                let newEl = document.createElement('li');		
+                let newEl = document.createElement('li');
                 newEl.innerHTML = "<img class='recimg' />"
                             +		"<div class='recinfo'>"
                             +			"<span id='rectitle'>"+recData[data].name+"</span>"
@@ -239,7 +256,7 @@
                             + "<img id='plusbtn' class='plusbtn' onclick='addPlaceListEvent()'/>";
 
                 newEl.className = "recitem";
-            
+
                 recListFragment.appendChild(newEl);
             }
 
@@ -256,7 +273,7 @@
             $('input[name=visitmin]').each(function() {
                 totalM += Number($(this).val());
             });
-            
+
             return [totalH, totalM];
         }
 
@@ -267,4 +284,5 @@
     </script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}"></script>
 </body>
+
 </html>

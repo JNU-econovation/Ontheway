@@ -13,6 +13,24 @@ for (let idx in locations) {
     createLocaItem(idx);
 }
 
+// 버튼 클릭할 시 캡처한 내용 body에 붙혀보기
+$('#btn-final').click((e) => {
+    console.log($(e.target.parentElement.parentElement.parentElement).children("section"));
+    html2canvas($("section")[0]).then(function (canvas) {
+        if (navigator.msSaveBlob) {
+            var blob = canvas.msToBlob();
+            return navigator.msSaveBlob(blob, '파일명.jpg');
+
+        } else {
+            var el = document.getElementById("target");
+            console.log(el);
+            el.href = canvas.toDataURL("image/png");
+            el.download = '파일명.png';
+            el.click();
+        }
+    });
+});
+
 function createLocaItem(idx) {
     let loca_item = document.createElement('div');
     let loca_text = document.createElement('div');
@@ -73,4 +91,3 @@ function createLocaItem(idx) {
         map: map
     });
 }
-

@@ -2,13 +2,13 @@
     0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
     40% {-webkit-transform: translateY(-30px) }
     60% {-webkit-transform: translateY(-20px);}
-} 
+}
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
     40% {transform: translateY(-30px);}
     60% {transform: translateY(-20px);}
-} 
+}
 
 .bounce {
     -webkit-animation-duration: 1s;
@@ -54,7 +54,7 @@ ul {
     top: 15px;
     display: flex;
     justify-content:flex-start;
-    width: 100vw;                       
+    width: 100vw;
     height: fit-content;
     z-index: 2;
     /* border: solid 1px #000000; */
@@ -416,4 +416,133 @@ ul {
 }
 #searchres ul li:hover {
     color: #000000;
+}
+.loading{
+    width:100%;
+    height:100%;
+    position:fixed;
+    left:0px;
+    top:0px;
+    background:#fff;
+    z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다. */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40.8rem;
+    height: 6rem;
+    background:black;
+    border-radius: 2.5rem;
+    color: white;
+
+
+
+}
+
+.loading-main span {
+    font-family: "NotoSans-M";
+    font-size: 1.3rem;
+}
+
+.loading-gif {
+    width: 5.3rem;
+    margin: 0.6rem;
+}
+
+
+/* -------------- loader10 -------------- */
+
+.loader10:before{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: -25px;
+    height: 0.8rem;
+    width: 0.8rem;
+    border-radius: 0.8rem;
+    -webkit-animation: loader10g 3s ease-in-out infinite;
+    animation: loader10g 3s ease-in-out infinite;
+}
+
+.loader10{
+    position: relative;
+    width: 0.8rem;
+    height: 0.8rem;
+    top: 46%;
+    left: 46%;
+    border-radius: 0.8rem;
+    -webkit-animation: loader10m 3s ease-in-out infinite;
+    animation: loader10m 3s ease-in-out infinite;
+}
+
+.loader10:after{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 25px;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    -webkit-animation: loader10d 3s ease-in-out infinite;
+        animation: loader10d 3s ease-in-out infinite;
+}
+
+@-webkit-keyframes loader10g{
+    0%{background-color: rgba(255, 255, 255, .2);}
+    25%{background-color: rgba(255, 255, 255, 1);}
+    50%{background-color: rgba(255, 255, 255, .2);}
+    75%{background-color: rgba(255, 255, 255, .2);}
+    100%{background-color: rgba(255, 255, 255, .2);}
+}
+@keyframes loader10g{
+    0%{background-color: rgba(255, 255, 255, .2);}
+    25%{background-color: rgba(255, 255, 255, 1);}
+    50%{background-color: rgba(255, 255, 255, .2);}
+    75%{background-color: rgba(255, 255, 255, .2);}
+    100%{background-color: rgba(255, 255, 255, .2);}
+}
+
+@-webkit-keyframes loader10m{
+    0%{background-color: rgba(255, 255, 255, .2);}
+    25%{background-color: rgba(255, 255, 255, .2);}
+    50%{background-color: rgba(255, 255, 255, 1);}
+    75%{background-color: rgba(255, 255, 255, .2);}
+    100%{background-color: rgba(255, 255, 255, .2);}
+}
+@keyframes loader10m{
+    0%{background-color: rgba(255, 255, 255, .2);}
+    25%{background-color: rgba(255, 255, 255, .2);}
+    50%{background-color: rgba(255, 255, 255, 1);}
+    75%{background-color: rgba(255, 255, 255, .2);}
+    100%{background-color: rgba(255, 255, 255, .2);}
+}
+
+@-webkit-keyframes loader10d{
+    0%{background-color: rgba(255, 255, 255, .2);}
+    25%{background-color: rgba(255, 255, 255, .2);}
+    50%{background-color: rgba(255, 255, 255, .2);}
+    75%{background-color: rgba(255, 255, 255, 1);}
+    100%{background-color: rgba(255, 255, 255, .2);}
+}
+@keyframes loader10d{
+    0%{background-color: rgba(255, 255, 255, .2);}
+    25%{background-color: rgba(255, 255, 255, .2);}
+    50%{background-color: rgba(255, 255, 255, .2);}
+    75%{background-color: rgba(255, 255, 255, 1);}
+    100%{background-color: rgba(255, 255, 255, .2);}
+}
+
+.box {
+    display: inline-block;
+    height: 100%;
+    width: 12%;
+    float: left;
+    position: relative;
+    /*margin:0 -4px -5px -2px;*/
+    transition: all .2s ease;
 }
