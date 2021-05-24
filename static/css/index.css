@@ -279,8 +279,9 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 5rem;
+    height: 3.5rem;
     z-index: 10;
+    top: 20%;
 }
 
 .when-where {
@@ -302,7 +303,8 @@ header {
     text-align: center;
     font: 1.5rem;
     width: 8rem;
-    font-weight: 600;
+    height: inherit;
+    /* font-weight: 500; */
 }
 
 .who-dropdown .who-menu {
@@ -314,13 +316,25 @@ header {
 }
 
 .who-dropdown .who-menu .who-option {
-    height: 1.6rem;
+    height: 1.8rem;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 100;
 }
 
 .who-dropdown .who-menu .who-option:hover {
-    height: 1.6rem;
+    height: 1.8rem;
     color: white;
     background: black;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 100;
 }
 
 .who-dropdown .who-title {
@@ -356,7 +370,8 @@ header {
     text-align: center;
     font: 1.5rem;
     width: 8rem;
-    font-weight: 600;
+    height: inherit;
+    /* font-weight: 500; */
 }
 
 .how-dropdown .how-menu {
@@ -368,13 +383,25 @@ header {
 }
 
 .how-dropdown .how-menu .how-option {
-    height: 1.6rem;
+    height: 1.8rem;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 100;
 }
 
 .how-dropdown .how-menu .how-option:hover {
-    height: 1.6rem;
+    height: 1.8rem;
     color: white;
     background: black;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 100;
 }
 
 .how-dropdown .how-title {
@@ -402,7 +429,7 @@ header {
     /* text-align: center; */
     font: "NotoSans-B";
     width: 10rem;
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 
 .when-dropdown .when-title {
@@ -428,9 +455,9 @@ header {
     text-align: center;
     font: 1.5rem;
     width: 11rem;
-    font-weight: 600;
-    position: relative;
-    z-index: 200;
+    /* font-weight: 600; */
+    /* position: relative;
+    z-index: 200; */
 }
 
 .where-dropdown .where-title {
@@ -451,6 +478,7 @@ header {
     box-shadow: none;
     outline: none;
     font: "NotoSans-R";
+    font-size: 1.2rem;
     cursor: pointer;
     z-index: 100;
 }
@@ -606,9 +634,9 @@ input:focus {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
+    /* position: relative; */
     /* top: 1.5rem; */
-    z-index: 200;
+    /* z-index: 200; */
 }
 
 #search-result {
