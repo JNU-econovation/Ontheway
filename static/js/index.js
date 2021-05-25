@@ -156,6 +156,21 @@ $("#where-input").on("paste keyup click", function () {
     })
 });
 
+$("#btn-start").click(function() {
+    console.log('clicked');
+    $.ajax({
+        type: "POST",
+        url: "/main",
+        success: function (response) {
+            document.write(response);
+            document.close();
+        },
+        error: function (request, status, error) {
+            console.log(error);
+            // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    })
+});
 
 
 // API 연결

@@ -49,8 +49,8 @@ def path():
 @app.route('/result', methods=['POST', 'GET']) # 4번째 페이지
 def result():
     if request.method == "POST":
-        res = request.get_json();
-        print(res)
+        res = request.get_json()
+        print("result: ",res)
         return render_template('result.html', data = res)
     return render_template('result.html')
 

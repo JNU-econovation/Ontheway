@@ -34,7 +34,33 @@ function addRemoveFunctionToBtn() {
     0 : name, lat, log
 }
 */
-function goToMap() {
+// function goToMap() {
+//     var jsonData = {};
+//     for (var k in clicked_items) {
+//         jsonData[k] = clicked_items[k];
+//         console.log("clicked_items[k]"+clicked_items[k]);
+//     }
+
+//     console.log(jsonData);
+//     $.ajax({
+//         type: "POST",
+//         contentType: "application/json",
+//         url: "/map",
+//         dataType: "text",
+//         data: JSON.stringify(jsonData),
+//         success: function (response) {
+//             document.write(response);
+            
+//         },
+//         error: function (request, status, error) {
+//             console.log(error);
+//             // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+//         }
+//     })
+// }
+
+$("#btn-start").click(function() {
+    console.log("clicked!!");
     var jsonData = {};
     for (var k in clicked_items) {
         jsonData[k] = clicked_items[k];
@@ -46,18 +72,19 @@ function goToMap() {
         type: "POST",
         contentType: "application/json",
         url: "/map",
-        dataType: "text",
         data: JSON.stringify(jsonData),
         success: function (response) {
+            console.log(document);
             document.write(response);
-            
+            // console.log(response);
+            // $('html').html(response);
         },
         error: function (request, status, error) {
             console.log(error);
             // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     })
-}
+});
 
 function removeList() {
   let listEl = document.getElementById("search-result");
