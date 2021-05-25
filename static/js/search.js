@@ -76,8 +76,7 @@ $("#btn-start").click(function() {
         success: function (response) {
             console.log(document);
             document.write(response);
-            // console.log(response);
-            // $('html').html(response);
+            document.close();
         },
         error: function (request, status, error) {
             console.log(error);

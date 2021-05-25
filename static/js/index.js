@@ -115,7 +115,7 @@ $("#where-input").on("paste keyup click", function () {
 
     $.ajax({
         method: "POST",
-        url: "/api/search", //"https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
+        url: "/api/area", //"https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
         async: false,
         data: {
             "searchKeyword": searchKeyword

@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect
-import search, recPath
+import search, recPath, search_province
 import recommend
 import json
 import numpy
 
 search_attraction = search.Search()
+search_area = search_province.Search()
 
 app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET']) # 1번째 페이지
@@ -32,6 +33,12 @@ def map():
 def post():
     keyword = request.form['searchKeyword']
     suggestions = search_attraction.suggest(keyword)
+    return suggestions
+
+@app.route('/api/area', methods=['POST'])
+def area():
+    keyword = request.form['searchKeyword']
+    suggestions = search_area.suggest(keyword)
     return suggestions
 
 @app.route('/api/path', methods=['POST'])
