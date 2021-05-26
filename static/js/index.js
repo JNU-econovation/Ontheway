@@ -44,31 +44,28 @@ function handleOptionSelected(e) {
     // console.log(id);
     if (e.target.className == 'who-option') {
         const whoTitleElem = document.querySelector('.who-dropdown .who-title');
-        const blueDonut = document.querySelector('.moving-donut');
-        const smile1 = document.querySelector('.moving-smile-1');
         const whoText = document.querySelector('.who-text');
 
         whoTitleElem.style.color = "black";
         whoTitleElem.textContent = newValue;
-        blueDonut.style.display = "inherit";
-        smile1.style.display = "inherit";
+
         if (id === 'alone') {
             whoText.style.display = "none";
         } else {
             whoText.style.display = "inherit";
         }
         clicked_options['who'] = id;
+
+        playVideo();
         // console.log(clicked_options);
     } else {
         const howTitleElem = document.querySelector('.how-dropdown .how-title');
-        const smile2 = document.querySelector('.moving-smile-2');
-        const pinkStar1 = document.querySelector('.pink-star-1');
 
         howTitleElem.style.color = "black";
         howTitleElem.textContent = newValue;
-        smile2.style.display = "inherit";
-        pinkStar1.style.display = "inherit";
         clicked_options['how'] = id;
+
+        playVideo();
         // console.log(clicked_options);
     }
     //커스텀 이벤트 트리거
@@ -77,40 +74,40 @@ function handleOptionSelected(e) {
 }
 
 function activateWhenAnimation() {
-    const pinkStar2 = document.querySelector('.pink-star-2');
-    const smile3 = document.querySelector('.moving-smile-3');
-
-    pinkStar2.style.display = "inherit";
-    smile3.style.display = "inherit";
-
     const calendar_value_i = $("#calendar-tomorrow").val();
     clicked_options['when'] = calendar_value_i;
+    playVideo();
     // console.log(clicked_options);
-}
-
-function activateWhereAnimation() {
-    const greenArrow = document.querySelector('.green-arrow');
-    const smile4 = document.querySelector('.moving-smile-4');
-
-    greenArrow.style.display = "inherit";
-    smile4.style.display = "inherit";
-
 }
 
 function removeList() {
     let listEl = document.getElementById("search-result");
-  
+
     while (listEl.hasChildNodes()) {
-      listEl.removeChild(listEl.firstChild);
+        listEl.removeChild(listEl.firstChild);
     }
 }
+
+function playVideo() {
+    let bgVideo = document.getElementById("interactive_video");
+    let stopTime = new Array("3.2", "3.3", "6.3", "6.4", "9.1", "9.2", "11.0", "11.1");
+
+    bgVideo.play();
+    bgVideo.addEventListener("timeupdate", function () {
+        console.log(this.currentTime);
+        if (stopTime.includes(this.currentTime.toFixed(1))) {
+            bgVideo.pause();
+        }
+    })
+}
+
 
 $("#where-input").on("paste keyup click", function () {
     let searchKeyword = $(this).val();
 
     if (searchKeyword.replace(/^s+|\s+$/g, "").length == 0) {
-      removeList();
-      return;
+        removeList();
+        return;
     }
 
     $.ajax({
@@ -140,23 +137,23 @@ $("#where-input").on("paste keyup click", function () {
 
                 let search_item = search_item_li.getElementsByTagName('div');
                 for (item of search_item) {
-                    $(item).on("click", function() {
+                    $(item).on("click", function () {
                         console.log('onclick');
                         document.getElementById('where-input').value = name;
                     });
                     break;
                 }
                 search_result.appendChild(search_item_li);
-        }
+            }
         },
-        error:function(request, status, error) {
+        error: function (request, status, error) {
             removeList();
             console.log(error);
         }
     })
 });
 
-$("#btn-start").click(function() {
+$("#btn-start").click(function () {
     console.log('clicked');
     $.ajax({
         type: "POST",
