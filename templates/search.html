@@ -38,7 +38,6 @@
             <div class="logo">
                 <img src="{{ url_for('static', filename='src/main_logo.png') }}" alt="가는길에 메인로고" draggable="false" />
             </div>
-            <div class="main_blank"></div>
             <div class="places-container">
                 <div class="input-places click-in">
                     <!-- 사용자가 작성한 장소에 따라 ' '안에 내용 바꾸기 -->
@@ -56,7 +55,6 @@
                     </li>-->
                     </ul>
                 </div>
-                <div class="places-blank"></div>
                 <div id="selected-places">
                     <!-- <div id="total">총 4 곳</div>
                     <div id="selected-items">
@@ -65,11 +63,11 @@
                     </div> -->
                 </div>
             </div>
-            <div class="main_blank_2"></div>
             <div id="speech_bubble">
                 <img src="{{ url_for('static', filename='src/speech_bubble.png') }}" alt="">
             </div>
-            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onmouseover="showSpeechBubble()" onmouseout="hideSpeechBubble()">
+            <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onmouseover="showSpeechBubble()"
+                onmouseout="hideSpeechBubble()">
                 <span>다음단계</span>
                 <img src="{{ url_for('static', filename='src/small_arrow_right.png') }}" alt="" />
             </button>

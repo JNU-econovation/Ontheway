@@ -37,38 +37,9 @@
         </button>
     </header>
     <div class="interactive">
-        <div class="moving-donut">
-            <img class="img-moving-donut" src="{{ url_for('static', filename='src/blue_donut.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="moving-smile-1">
-            <img class="img-moving-smile-1" src="{{ url_for('static', filename='src/smile1.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="moving-smile-2">
-            <img class="img-moving-smile-2" src="{{ url_for('static', filename='src/smile2.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="pink-star-1">
-            <img class="img-pink-star-1" src="{{ url_for('static', filename='src/pink_star_1.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="pink-star-2">
-            <img class="img-pink-star-2" src="{{ url_for('static', filename='src/pink_star_2.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="moving-smile-3">
-            <img class="img-moving-smile-3" src="{{ url_for('static', filename='src/smile3.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="green-arrow">
-            <img class="img-green-arrow" src="{{ url_for('static', filename='src/green_arrow.png') }}" alt=""
-                draggable="false" />
-        </div>
-        <div class="moving-smile-4">
-            <img class="img-moving-smile-4" src="{{ url_for('static', filename='src/smile4.png') }}" alt=""
-                draggable="false" />
-        </div>
+        <video id="interactive_video" width="100%" poster="{{url_for('static', filename='src/poster.png') }}">
+            <source id="video_src" src="{{url_for('static', filename='src/interactive_video.mp4') }}" type="video/mp4">
+        </video>
     </div>
     <div class="main-container">
         <div class="main">
@@ -92,8 +63,6 @@
                         <div class="blank"></div>
                         <div class="who-text">함께</div>
                     </div>
-                    <div class="blank"></div>
-                    <div class="blank"></div>
                     <div class="how">
                         <div class="how-dropdown">
                             <div class="how-title pointerCursor">교통수단
@@ -115,18 +84,15 @@
                         <div class="when-title pointerCursor">
                             <input type="text" id="calendar-tomorrow" placeholder="언제"
                                 onchange="activateWhenAnimation()">
-
                         </div>
                     </div>
                 </div>
-                <div class="blank"></div>
-                <div class="blank"></div>
                 <div class="where click-in">
                     <div class="where-container click-in">
                         <div class="where-dropdown click-in">
                             <div class="where-title pointerCursor click-in">
                                 <input type="text" id="where-input" class="click-in" placeholder="어느 지역으로"
-                                    onchange="activateWhereAnimation()" />
+                                    onchange="playVideo()" />
                             </div>
                         </div>
                         <ul id="search-result" class="click-in" name="search-result">
@@ -150,12 +116,9 @@
                             </li> -->
                         </ul>
                     </div>
-
-                    <div class="blank"></div>
                     <div class="where-text">가는길에</div>
                 </div>
             </div>
-            <div class="blank"></div>
             <div class="user-text">
                 갈만한 곳을 알고 싶어요
             </div>
