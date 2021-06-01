@@ -59,6 +59,7 @@ function addRemoveFunctionToBtn() {
 //     })
 // }
 
+
 $("#btn-start").click(function() {
     console.log("clicked!!");
     var jsonData = {};
@@ -72,9 +73,10 @@ $("#btn-start").click(function() {
         type: "POST",
         contentType: "application/json",
         url: "/map",
+        dataType: "text",
         data: JSON.stringify(jsonData),
         success: function (response) {
-            console.log(document);
+            console.log(response);
             document.write(response);
             document.close();
         },
