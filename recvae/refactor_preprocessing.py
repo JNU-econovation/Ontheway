@@ -23,7 +23,7 @@ def filter_triplets(tp, min_uc=5, min_sc=0):
     # After doing this, some of the items will have less than min_uc users, but should only be a small proportion
     if min_uc > 0:
         usercount = get_count(tp, 'uid')
-        tp = tp[tp['uid'].isin(usercount.index[usercount >= min_uc])]
+        tp = tp[tp['uid'].isin(usercount.index[usercount['size'] >= min_uc])]
 
     # Update both usercount and itemcount after filtering
     usercount, itemcount = get_count(tp, 'uid'), get_count(tp, 'place')
@@ -34,7 +34,7 @@ def load_data(path):
     raw_data = raw_data.drop_duplicates(['uid', 'place'], keep='first').reset_index()
     print_info(raw_data)
 
-    threshold=0
+    threshold=3.5
     feature = ['uid','place','rating']
     raw_data = raw_data[feature]
     raw_data['rating'][raw_data['rating']<=threshold]=0
@@ -100,8 +100,6 @@ def split_train_test_proportion(data, test_prop=0.2):
     data_grouped_by_user = data.groupby('uid')
     tr_list, te_list = list(), list()
 
-    np.random.seed(98765)
-
     for i, (_, group) in enumerate(data_grouped_by_user):
         n_items_u = len(group)
         idx = np.zeros(n_items_u, dtype='bool')
@@ -137,12 +135,10 @@ def pre_unique_sid(data_dir):
             cnt+=1
     return sid
 
-def preprocessing(data=None,mode_='test'):
+def preprocessing(data=None,data_dir="recvae/datasets/raw_data",mode='train'):
     #mode = 'train'
-    mode = mode_
     use_table = 'tripadvisor'    # 'tripadvisor' or 'review'
     min_user_count = 5
-    data_dir = "recvae/datasets/raw_data"
 
     if mode == 'train':
         pro_dir = './datasets/pre_data'#'./datasets/pre_data'"
@@ -161,7 +157,6 @@ def preprocessing(data=None,mode_='test'):
     unique_uid = user_activity.index
 
     if mode == 'train':
-        np.random.seed(98765)
         idx_perm = np.random.permutation(unique_uid.size) # 데이터셋 섞기
         unique_uid = unique_uid[idx_perm]
         n_heldout_users = int(user_activity.shape[0]*0.1)
@@ -242,3 +237,5 @@ def preprocessing(data=None,mode_='test'):
     elif mode=='test':
         train_data = numerize(train_plays,show2id, profile2id)
         train_data.to_csv(os.path.join('recvae/datasets/test', 'train.csv'), index=False)
+
+#preprocessing(data=None,data_dir="./datasets/raw_data",mode='train')

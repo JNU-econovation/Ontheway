@@ -4,9 +4,9 @@ import json
 import os
 
 def result(data):
-    rp.preprocessing(data)
-    test = 'python recvae/run.py --dataset "recvae/datasets/test" --mode="test" --topk=20'
-    time.sleep(2)
+    rp.preprocessing(data, mode='test')
+    test = 'python recvae/run.py --dataset "recvae/datasets/test" --mode="test" --topk=100'
+    time.sleep(3)
     os.system(test)
     path = 'recvae/results/result.json'
     return json.loads(open(path).read())

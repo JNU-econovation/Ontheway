@@ -216,7 +216,7 @@ section {
 }
 
 #total {
-    width: 30%;
+    width: 4rem;
 }
 
 @media screen and (min-width: 320px) {

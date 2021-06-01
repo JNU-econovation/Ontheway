@@ -14,9 +14,11 @@ import pandas as pd
 import argparse
 
 import json
+
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str)
-parser.add_argument('--output_dir', type=str, default='results')
+parser.add_argument('--output_dir', type=str, default='recvae/results')
 parser.add_argument('--hidden-dim', type=int, default=600) #600
 parser.add_argument('--latent-dim', type=int, default=200) #200
 parser.add_argument('--batch-size', type=int, default=500) #500
@@ -36,7 +38,8 @@ random.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)
 
-device = torch.device("cuda:0")
+#device = torch.device("cuda:0")
+device = torch.device("cpu")
 
 if args.mode=='train':
     data = get_train_data(args.dataset)
@@ -139,7 +142,7 @@ def train():
         'latent_dim': args.latent_dim,
         'input_dim': train_data.shape[1]
     }
-    metrics = [{'metric': ndcg, 'k': 100}]
+    metrics = [{'metric': ndcg, 'k': 20}]
 
     best_ndcg = -np.inf
     train_scores, valid_scores = [], []
@@ -220,10 +223,10 @@ def predict(model, data_in):
 
     return ratings_pred
 
-def recommend(data, unique_sid, k=5):
+def recommend(data, unique_sid, k=20):
     recs = list()
     for i in data:
-        topk = np.argsort(i)[::-1][:k] # top k개의  index를 가져옴
+        topk = np.argsort(i)[::-1][k:] # top k개의  index를 가져옴
         recommend_list = np.zeros(k)
         for tk in range(k):
             recommend_list[tk] = unique_sid[topk[tk]] # sid로 변환하여 할당
@@ -238,10 +241,10 @@ def test(data, k=20):
         'input_dim': data.shape[1]
     }
 
-    PATH = os.path.join('./model',os.listdir('./model')[-1])
+    PATH = os.path.join('recvae/model',os.listdir('recvae/model')[-1])
 
-    model = VAE(**model_kwargs).to(device)
-    model.load_state_dict(torch.load(PATH))
+    model = VAE(**model_kwargs)
+    model.load_state_dict(torch.load(PATH, map_location=device))
     # 데이터 넣기
     pred = predict(model,data)
 
@@ -260,15 +263,15 @@ def test(data, k=20):
             cnt+=1
 
     recs = pd.DataFrame(recommend(pred, sid, k),index=uid)
-    recs.to_json(os.path.join(args.output_dir, 'result.json'))
+    recs.to_json(os.path.join(args.output_dir, 'result_id.json'))
 
 
-    id2place = json.loads(open(os.path.join('datasets/pre_data', 'id2place.json')).read())
-    result =json.loads(open(os.path.join(args.output_dir, 'result.json')).read())
+    id2place = json.loads(open(os.path.join('recvae/datasets/pre_data', 'id2place.json')).read())
+    result =json.loads(open(os.path.join(args.output_dir, 'result_id.json')).read())
     data = pd.DataFrame(result)
     recommend_list = list()
-    for i in data:
-        recommend_list.append(id2place[i])
+    for i in data.T.values:
+        recommend_list.append(id2place[str(int(i[0]))])
     results = pd.DataFrame(recommend_list,columns=['place'])
     results.to_json(os.path.join(args.output_dir, 'result.json'))
 '''
@@ -279,4 +282,4 @@ if __name__ == "__main__":
     if args.mode == 'train':
         train()
     elif args.mode == 'test':
-        test(practice_data)
+        test(practice_data, args.topk)
