@@ -2,7 +2,7 @@ let clicked_options = {};
 clicked_options['who'] = '';
 clicked_options['how'] = '';
 clicked_options['when'] = '';
-clicked_options['where'] = '';
+clicked_options['where'] = {};
 
 function toggleClass(elem, className) {
     if (elem.className.indexOf(className) !== -1) { // 일치하는 값이 있으면
@@ -120,7 +120,7 @@ $("#where-input").on("paste keyup click", function () {
         success: function (response) {
             removeList();
             let resultpoisData = response;
-            console.log(resultpoisData);
+            
             for (let k in resultpoisData) {
                 // 위도, 경도, 이름 받아온다.
                 let lat = Number(resultpoisData[k].lat);
@@ -138,7 +138,6 @@ $("#where-input").on("paste keyup click", function () {
                 let search_item = search_item_li.getElementsByTagName('div');
                 for (item of search_item) {
                     $(item).on("click", function () {
-                        console.log('onclick');
                         document.getElementById('where-input').value = name;
                     });
                     break;
@@ -154,14 +153,15 @@ $("#where-input").on("paste keyup click", function () {
 });
 
 $("#btn-start").click(function () {
-    console.log('clicked');
+    var jsonData = clicked_options['where'];
+    console.log(jsonData);
+
     $.ajax({
         type: "POST",
+        contentType: "application/json",
         url: "/main",
-        async: false,
-        data: {
-            "option": clicked_options['where']
-        },
+        dataType: "text",
+        data: JSON.stringify(jsonData),
         success: function (response) {
             document.write(response);
             document.close();
@@ -171,6 +171,22 @@ $("#btn-start").click(function () {
             // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     })
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/main",
+    //     async: false,
+    //     data: {
+    //         "option": clicked_options['where']
+    //     },
+    //     success: function (response) {
+    //         document.write(response);
+    //         document.close();
+    //     },
+    //     error: function (request, status, error) {
+    //         console.log(error);
+    //         // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    //     }
+    // })
 });
 
 
@@ -243,7 +259,11 @@ $(document).on("click", "#search-item", function () {
         clicked_location.pop();
     }
     clicked_location.push(search_item_info);
-    clicked_options['where'] = clicked_location[0].name;
+    clicked_options['where'] = { 
+        "province" : clicked_location[0].name,
+        "lat" : clicked_location[0].lat,
+        "lon" : clicked_location[0].lon
+    };
     // console.log(clicked_options);
 });
 

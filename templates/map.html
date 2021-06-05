@@ -91,7 +91,7 @@
         </div>
         <div id="location">
             <img src="{{ url_for('static', filename='src/location.png') }}" >
-            <h1>부산광역시</h1>
+            <h1 id="province">부산광역시</h1>
         </div>
         <div class="icons">
             <div class="icon" id="calendar"><img src="{{ url_for('static', filename='src/calendar.png') }}"></div>
@@ -152,18 +152,23 @@
     </div>
     <script type="text/javascript">
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-        var options = {
-            center: new Tmapv2.LatLng(37.570028, 126.986072),
-            zoom : 12,
-            zoomControl : true,
-            scrollwheel : true
-        };
-        var map = new Tmapv2.Map(container, options);
-
+        
         addPlaceData();
         addRec();
+
         function addPlaceData() {
-            var placeData = {{ data | tojson }};
+            var data = {{ data | tojson }};
+            var placeData = data['place'];
+
+            $('#province').text(data['pos']['province']);
+
+            var options = {
+                center: new Tmapv2.LatLng(data['pos']['lat'], data['pos']['lon']),
+                zoom : 12,
+                zoomControl : true,
+                scrollwheel : true
+            };
+            var map = new Tmapv2.Map(container, options);
 
             let listEl = document.getElementById('placeul');
             let listFragment = document.createDocumentFragment();

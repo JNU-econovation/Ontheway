@@ -69,10 +69,23 @@
             <button id="btn-start" type="submit" alt="다음 페이지 이동버튼" onmouseover="showSpeechBubble()"
                 onmouseout="hideSpeechBubble()">
                 <span>다음단계</span>
+                <span id='pos' style='display: none'></span>
+                <span id='lat' style='display: none'></span>
+                <span id='lon' style='display: none'></span>
+
                 <img src="{{ url_for('static', filename='src/small_arrow_right.png') }}" alt="" />
             </button>
         </div>
     </section>
+    <script type="text/javascript">
+        var provinceData = {{ where | tojson }};
+        var pos = document.getElementById('pos');
+        var lat = document.getElementById('lat');
+        var lon = document.getElementById('lon');
+        pos.innerHTML = provinceData['province'];
+        lat.innerHTML = provinceData['lat'];
+        lon.innerHTML = provinceData['lon'];
+    </script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/search.js') }}"></script>
 </body>
 
