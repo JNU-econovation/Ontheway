@@ -25,7 +25,7 @@ def map():
     if request.method == 'POST':
         res = request.get_json()
         print(res)
-        url = 'http://15.164.170.114/map'
+        url = 'http://15.164.170.114/recommend'
         rec = requests.post(url, json=res)
         print(json.loads(rec.content))
         # rec = {'0': {'name': '경복궁', 'lat': '37.579617', 'lon': '126.974847'}, '1': {'name': '창덕궁', 'lat': '37.5823645', 'lon': '126.9907841'}, '2': {'name': '롯데월드', 'lat': '37.5125971', 'lon': '127.1003451'}, '3': {'name': '잠실종합운동장', 'lat': '37.5148406', 'lon': '127.0709184'}, '4': {'name': '잠실 야구 경기장', 'lat': '37.5122579', 'lon': '127.0697071'}}
