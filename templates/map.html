@@ -240,19 +240,20 @@
         }
 
         function addRec() {
-            var rec_ = {{ rec | tojson }};
-            var recData = rec_['place'];
+            var recData = {{ rec | tojson }};
             var recListEl = document.getElementById('recul');
             var recListFragment = document.createDocumentFragment();
 
             for (var data in recData) {
                 console.log(recData[data]);
+
+                res = recData[data];
                 let newEl = document.createElement('li');
                 newEl.innerHTML = "<img class='recimg' />"
                             +		"<div class='recinfo'>"
-                            +			"<span id='rectitle'>"+recData[data]+"</span>"
-                            +			"<span id='lat' style='display: none'>"+recData[data]+"</span>"
-                            +			"<span id='lon' style='display: none'>"+recData[data]+"</span>"
+                            +			"<span id='rectitle'>"+res.name+"</span>"
+                            +			"<span id='lat' style='display: none'>"+res.lat+"</span>"
+                            +			"<span id='lon' style='display: none'>"+res.lon+"</span>"
                             +		"</div>"
                             + "<img id='plusbtn' class='plusbtn' onclick='addPlaceListEvent()'/>";
 

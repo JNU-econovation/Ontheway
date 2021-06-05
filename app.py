@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect
 import search, recPath, search_province
-import recommend
 import json
 import numpy
 import time
+import requests
 
 search_attraction = search.Search()
 search_area = search_province.Search()
@@ -13,8 +13,9 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/main', methods=['POST', 'GET']) # 2번째 페이지
+@app.route('/main', methods=['POST']) # 2번째 페이지
 def main():
+    where = request.form['option']
     return render_template('search.html')
 
 @app.route('/map', methods=['POST', 'GET']) # 3번째 페이지
@@ -22,11 +23,11 @@ def map():
     if request.method == 'POST':
         res = request.get_json()
         print(res)
-        rec = recommend.result(res)
-        time.sleep(3)
-        print(rec)
+        url = 'http://52.79.201.119/map'
+        rec = requests.post(url, json=res)
+        print(json.loads(rec.content))
         # rec = {'0': {'name': '경복궁', 'lat': '37.579617', 'lon': '126.974847'}, '1': {'name': '창덕궁', 'lat': '37.5823645', 'lon': '126.9907841'}, '2': {'name': '롯데월드', 'lat': '37.5125971', 'lon': '127.1003451'}, '3': {'name': '잠실종합운동장', 'lat': '37.5148406', 'lon': '127.0709184'}, '4': {'name': '잠실 야구 경기장', 'lat': '37.5122579', 'lon': '127.0697071'}}
-        return render_template('map.html', data = res, rec = rec)
+        return render_template('map.html', data = res, rec = json.loads(rec.content))
     elif request.method == 'GET':
         return render_template('map.html')
 

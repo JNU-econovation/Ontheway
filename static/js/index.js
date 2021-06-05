@@ -94,7 +94,7 @@ function playVideo() {
 
     bgVideo.play();
     bgVideo.addEventListener("timeupdate", function () {
-        console.log(this.currentTime);
+        // console.log(this.currentTime);
         if (stopTime.includes(this.currentTime.toFixed(1))) {
             bgVideo.pause();
         }
@@ -158,6 +158,10 @@ $("#btn-start").click(function () {
     $.ajax({
         type: "POST",
         url: "/main",
+        async: false,
+        data: {
+            "option": clicked_options['where']
+        },
         success: function (response) {
             document.write(response);
             document.close();
