@@ -441,9 +441,17 @@ function getRecPath() {
 					});
 
 					for (var k in res) {
+						if (k == Object.keys(res).length - 1) break;
+						
 						var markerPosition = new Tmapv2.LatLng(res[k].lat, res[k].lon);
 						path.push(markerPosition);
-						addMarker(map, res[k].name, markerPosition, positionBounds);
+
+						if (k == 0) {
+							addMarker(map, res[k].name, markerPosition, positionBounds, 2);
+						}
+						else {
+							addMarker(map, res[k].name, markerPosition, positionBounds);
+						}
 					}
 					
 					console.log(map);
@@ -510,6 +518,10 @@ function addMarker(map, name, markerPosition, positionBounds, option=0) {
 	if (option == 1) {
 		url = "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/pin_orange.png";
 		size = new Tmapv2.Size(28, 38)
+	}
+	if (option == 2) {
+		url = "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/pin_yellow_start.png";
+		size = new Tmapv2.Size(30, 40)
 	}
 
 	marker = new Tmapv2.Marker({
