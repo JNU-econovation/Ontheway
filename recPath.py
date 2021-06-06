@@ -146,7 +146,11 @@ def construct_matrix(poses):
                     except:
                         print('API 수집오류 발생, 재시도')
                     break
-                matrix[start+1][end+1] = total_time
+                # print('💚',total_time)
+                try:
+                    matrix[start+1][end+1] = total_time
+                except:
+                    pass
             else:
                 matrix[start+1][end+1] = 0
 

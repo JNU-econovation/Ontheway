@@ -77,7 +77,7 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 								scrollwheel : true
 							});
 							
-							addMarker(map, name, markerPosition, positionBounds);
+							addMarker(map, name, markerPosition, positionBounds, 1);
 							
 							displayInfoWindow(map, name, markerPosition);
 						});
@@ -203,11 +203,20 @@ function addPlaceListFromSearch(name, lat, lon) {
 	});
 
 	let listEl = document.getElementById('placeul');
-	let cnt = listEl.childElementCount;
+	const itemEls = listEl.getElementsByTagName("li");
 
 	if (listEl.childElementCount >= 30) {
 		alert("일정은 30개 이상 추가할 수 없습니다!");
 		return;
+	}
+
+	for (let el of itemEls) {
+		const elPlaceName = $($(el).children("div")).children("span").first().text();
+
+		if (name == elPlaceName) {
+			alert('같은 장소를 중복해서 추가할 수 없어요! 😅');
+			return;
+		}
 	}
 
 	let listFragment = document.createDocumentFragment();
@@ -262,19 +271,30 @@ function addPlaceListFromSearch(name, lat, lon) {
 
 function addPlaceListEvent() {
 	let listEl = document.getElementById('placeul');
+	const itemEls = listEl.getElementsByTagName("li");
 	let cnt = listEl.childElementCount;
 
 	if (cnt >= 30) {
 		alert("일정은 30개 이상 추가할 수 없습니다!");
 		return;
 	}
-
+	
 	let eventEl = $(event.target).closest('li');
 	const placeName = $(eventEl.children("div")).children("span").first().text();
 	const lat = $(eventEl.children("div")).children("span:nth-child(2)").text();
 	const lon = $(eventEl.children("div")).children("span").last().text();
 
 	console.log(placeName + lat + lon);
+
+	for (let el of itemEls) {
+		const elPlaceName = $($(el).children("div")).children("span").first().text();
+
+		if (placeName == elPlaceName) {
+			alert('같은 장소를 중복해서 추가할 수 없어요! 😅');
+			return;
+		}
+	}
+
 	eventEl.remove();
 
 	let listFragment = document.createDocumentFragment();
@@ -435,7 +455,8 @@ function getRecPath() {
 						map: map // 지도 객체
 					});
 					
-					
+					map.panToBounds(positionBounds);	// 확장된 bounds의 중심으로 이동시키기
+
 					// $("#share").click(function() {
 
 					// 	$.ajax({
@@ -481,11 +502,19 @@ function removeMarker() {
 	}
 }
 
-function addMarker(map, name, markerPosition, positionBounds) {
+function addMarker(map, name, markerPosition, positionBounds, option=0) {
+	url = "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/blue_pin.png";
+	size = new Tmapv2.Size(24, 24);
+
+	if (option == 1) {
+		url = "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/pin_orange.png";
+		size = new Tmapv2.Size(28, 38)
+	}
+
 	marker = new Tmapv2.Marker({
 		position : markerPosition,
-		icon : "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/blue_pin.png",
-		iconSize : new Tmapv2.Size(24, 24),
+		icon : url,
+		iconSize : size,
 		title : name,
 		map: map
 	});
