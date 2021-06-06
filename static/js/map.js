@@ -413,7 +413,7 @@ function getRecPath() {
 
 					map = new Tmapv2.Map(container, {
 						center: new Tmapv2.LatLng(res[0].lat, res[0].lon),
-						zoom : 17,
+						zoom : 11,
 						zoomControl : true,
 						scrollwheel : true
 					});
