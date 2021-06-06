@@ -29,45 +29,15 @@ function addRemoveFunctionToBtn() {
         }
     }
 }
-/*
-{
-    0 : name, lat, log
-}
-*/
-// function goToMap() {
-//     var jsonData = {};
-//     for (var k in clicked_items) {
-//         jsonData[k] = clicked_items[k];
-//         console.log("clicked_items[k]"+clicked_items[k]);
-//     }
-
-//     console.log(jsonData);
-//     $.ajax({
-//         type: "POST",
-//         contentType: "application/json",
-//         url: "/map",
-//         dataType: "text",
-//         data: JSON.stringify(jsonData),
-//         success: function (response) {
-//             document.write(response);
-            
-//         },
-//         error: function (request, status, error) {
-//             console.log(error);
-//             // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-//         }
-//     })
-// }
-
 
 $("#btn-start").click(function() {
     // console.log("clicked!!");
     var clickedData = {};
+
     for (var k in clicked_items) {
         clickedData[k] = clicked_items[k];
-        console.log("clicked_items[k]"+clicked_items[k]);
     }
-
+    
     var jsonData = {
         "place": clickedData,
         "pos": {

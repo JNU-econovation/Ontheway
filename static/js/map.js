@@ -11,6 +11,7 @@ var container = document.getElementById('map'); //지도를 담을 영역의 DOM
 // };
 // var map = new Tmapv2.Map(container, options);
 var map;
+var provincePosition;
 
 // $("#placeul .placeitem #removebtn").click();
 let actualT = getActualTime();
@@ -60,12 +61,12 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 					let name = resultpoisData[k].name;
 					console.log(resultpoisData[k].lat, resultpoisData[k].lng);
 					var markerPosition = new Tmapv2.LatLng(resultpoisData[k].lat, resultpoisData[k].lng);
-
+					var positionBounds = new Tmapv2.LatLngBounds();
 					let newEl = document.createElement("li");
 					newEl.className = "serachitem";
 					newEl.innerHTML = name;
 
-					(function(map, name, markerPosition) {
+					(function(map, name, markerPosition, positionBounds) {
 						newEl.addEventListener("click", function() {
 							container.innerHTML = '';
 
@@ -75,14 +76,12 @@ $('input[name=searchbox]').on("paste keyup click", function() {
 								zoomControl : true,
 								scrollwheel : true
 							});
-
-							var marker = new Tmapv2.Marker({
-								position: markerPosition, //Marker의 중심좌표 설정.
-								map: map //Marker가 표시될 Map 설정..
-							});
+							
+							addMarker(map, name, markerPosition, positionBounds);
+							
 							displayInfoWindow(map, name, markerPosition);
 						});
-					})(map, name, markerPosition);
+					})(map, name, markerPosition, positionBounds);
 
 					liFragment.appendChild(newEl);
 				}
@@ -179,7 +178,7 @@ function addRemoveEvent() {
 
 	for (var k in data) {
 		var markerPosition = new Tmapv2.LatLng(data[k].lat, data[k].lon);
-		addMarker(data[k].name, markerPosition, positionBounds);
+		addMarker(map, data[k].name, markerPosition, positionBounds);
 	}
 
 	map.setCenter(new Tmapv2.LatLng(data[0].lat, data[0].lon));
@@ -190,6 +189,18 @@ function addPlaceListFromSearch(name, lat, lon) {
 	if (infoWindow) {
 		infoWindow.setVisible(false);
 	}
+	var at = $('#province-lat').text();
+	var on = $('#province-lon').text();
+
+	provincePosition = new Tmapv2.LatLng(at, on);
+	container.innerHTML = '';
+
+	map = new Tmapv2.Map(container, {
+		center: provincePosition,
+		zoom : 10,
+		zoomControl : true,
+		scrollwheel : true
+	});
 
 	let listEl = document.getElementById('placeul');
 	let cnt = listEl.childElementCount;
@@ -396,41 +407,54 @@ function getRecPath() {
         success: function (response) {
 					var positionBounds = new Tmapv2.LatLngBounds();		//맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
 					var path = [];
+					var res = response['path']
 
-					for (var k in response['path']) {
-						var markerPosition = new Tmapv2.LatLng(response['path'][k].lat, response['path'][k].lon);
+					container.innerHTML = '';
+
+					map = new Tmapv2.Map(container, {
+						center: new Tmapv2.LatLng(res[0].lat, res[0].lon),
+						zoom : 17,
+						zoomControl : true,
+						scrollwheel : true
+					});
+
+					for (var k in res) {
+						var markerPosition = new Tmapv2.LatLng(res[k].lat, res[k].lon);
 						path.push(markerPosition);
-						addMarker(response['path'][k].name, markerPosition, positionBounds);
+						addMarker(map, res[k].name, markerPosition, positionBounds);
 					}
+					
+					console.log(path);
+					console.log(map);
 
 					var polyline = new Tmapv2.Polyline({
 						path: path,
-						strokeColor: "#dd00dd", // 라인 색상
+						strokeColor: "#18A0FB", // 라인 색상
 						strokeWeight: 6, // 라인 두께
 						strokeStyle: "solid", // 선의 종류
 						map: map // 지도 객체
 					});
+					
+					
+					// $("#share").click(function() {
 
-					map.setCenter( new Tmapv2.LatLng(response['path'][0].lat, response['path'][0].lon));
-					$("#share").click(function() {
+					// 	$.ajax({
+					// 			type: "POST",
+					// 			contentType: "application/json",
+					// 			url: "/result",
+					// 			dataType: "json",
+					// 			data: JSON.stringify(data),
+					// 			success: function (response) {
+					// 				// document.write(response);
+					// 				console.log(response);
+					// 			},
+					// 			error: function (request, status, error) {
+					// 					// console.log("error!!", error);
+					// 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					// 			}
+					// 	});
 
-						$.ajax({
-								type: "POST",
-								contentType: "application/json",
-								url: "/result",
-								dataType: "json",
-								data: JSON.stringify(data),
-								success: function (response) {
-									// document.write(response);
-									console.log(response);
-								},
-								error: function (request, status, error) {
-										// console.log("error!!", error);
-										console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-								}
-						});
-
-					});
+					// });
 
         },
         error: function (request, status, error) {
@@ -457,13 +481,14 @@ function removeMarker() {
 	}
 }
 
-function addMarker(name, markerPosition, positionBounds) {
+function addMarker(map, name, markerPosition, positionBounds) {
 	marker = new Tmapv2.Marker({
 		position : markerPosition,
-		iconSize : new Tmapv2.Size(24, 38),
+		icon : "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/blue_pin.png",
+		iconSize : new Tmapv2.Size(24, 24),
 		title : name,
 		map: map
-	   });
+	});
 
 	markerArr.push(marker);
 	positionBounds.extend(markerPosition);	// LatLngBounds의 객체 확장

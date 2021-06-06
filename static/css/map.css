@@ -363,6 +363,7 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
 }
 #schedule .reclist ul li .recinfo span {
     font-size: 15px;

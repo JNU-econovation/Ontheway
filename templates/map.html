@@ -46,6 +46,7 @@
             height: 60px;
             background-image: url({{ url_for('static', filename='src/alt_img.png') }});
             background-size: cover;
+            cursor: pointer;
         }
         #schedule .reclist ul li .plusbtn {
             position: relative;
@@ -92,6 +93,8 @@
         <div id="location">
             <img src="{{ url_for('static', filename='src/location.png') }}" >
             <h1 id="province">부산광역시</h1>
+            <span id="province-lat" style="display: none;"></span>
+            <span id="province-lon" style="display: none;"></span>
         </div>
         <div class="icons">
             <div class="icon" id="calendar"><img src="{{ url_for('static', filename='src/calendar.png') }}"></div>
@@ -152,30 +155,36 @@
     </div>
     <script type="text/javascript">
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-        
+        var infoWindow;
+        var map;
+        var markerArr = [];
+
         addPlaceData();
         addRec();
 
         function addPlaceData() {
             var data = {{ data | tojson }};
+            console.log(data);
             var placeData = data['place'];
 
             $('#province').text(data['pos']['province']);
+            $('#province-lat').text(data['pos']['lat']);
+            $('#province-lon').text(data['pos']['lon']);
 
             var options = {
                 center: new Tmapv2.LatLng(data['pos']['lat'], data['pos']['lon']),
-                zoom : 12,
+                zoom : 10,
                 zoomControl : true,
                 scrollwheel : true
             };
-            var map = new Tmapv2.Map(container, options);
+
+            map = new Tmapv2.Map(container, options);
 
             let listEl = document.getElementById('placeul');
             let listFragment = document.createDocumentFragment();
 
             let cnt = 0;
             if ($.isEmptyObject(placeData)) {
-
                 let el = document.createElement('li');
                 el.innerHTML = "<span>여행 장소를 선택해주세요.</span>";
                 el.id = "emptyli";
@@ -251,8 +260,10 @@
 
             for (var data in recData) {
                 console.log(recData[data]);
-
                 res = recData[data];
+
+				var markerPosition = new Tmapv2.LatLng(res.lat, res.lon);
+
                 let newEl = document.createElement('li');
                 newEl.innerHTML = "<img class='recimg' />"
                             +		"<div class='recinfo'>"
@@ -263,6 +274,31 @@
                             + "<img id='plusbtn' class='plusbtn' onclick='addPlaceListEvent()'/>";
 
                 newEl.className = "recitem";
+
+
+                (function(map, name, markerPosition) {
+                    newEl.addEventListener("click", function() {
+                        container.innerHTML = '';
+
+                        map = new Tmapv2.Map(container, {
+                            center: markerPosition,
+                            zoom : 17,
+                            zoomControl : true,
+                            scrollwheel : true
+                        });
+
+                        markerArr.push(
+                            new Tmapv2.Marker({
+                                position: markerPosition, //Marker의 중심좌표 설정.
+                                icon: "https://ontheway.s3.ap-northeast-2.amazonaws.com/src/pin_orange.png",
+                        		iconSize : new Tmapv2.Size(28, 38),
+                                map: map //Marker가 표시될 Map 설정..
+                            })
+                        );
+
+                        displayInfoWindow(map, name, markerPosition);
+                    });
+                })(map, res.name, markerPosition);
 
                 recListFragment.appendChild(newEl);
             }
@@ -287,6 +323,28 @@
         function setActualTime(hour, min) {
             $("#actualT").text("총 소요시간 " + hour + "시간 " + min + "분");
         }
+
+        function displayInfoWindow(map, name, markerPosition) {
+            var content= "<div style='position: static; display: flex; font-size: 14px; border-radius: 10px; top: 410px; left : 800px; width : 250px; background: #FFFFFF 0% 0% no-repeat padding-box;'>"+
+                            "<div class='info-box' style='width: 100%; padding: 10px; position: relative; display: flex; justify-content: space-between; align-items: center;'>"+
+                                "<span class='tit' style='font-size: 16px; font-weight: bold;'>"+name+"</span>"+
+                                "<button style='cursor: pointer; outline: none; border: solid 1px #000000; padding: 7px 7px; text-align: center; font-size: 14px; background-color: #FFE13B' onclick=\"addPlaceListFromSearch('"+name+"',"+markerPosition.lat()+","+markerPosition.lng()+")\">"+
+                                    "일정에 추가"+
+                                "</button>"+
+                            "</div>"+
+                        "</div>";
+                if (infoWindow) {
+                    infoWindow.setVisible(false);
+                }
+                //Popup 객체 생성.
+                infoWindow = new Tmapv2.InfoWindow({
+                    position: markerPosition, //Popup 이 표출될 맵 좌표
+                    border :'0px solid #FF0000', //Popup의 테두리 border 설정.
+                    content: content, //Popup 표시될 text
+                    type: 2, //Popup의 type 설정.
+                    map: map //Popup이 표시될 맵 객체
+		});
+}
 
     </script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}"></script>

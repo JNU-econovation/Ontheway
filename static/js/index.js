@@ -154,7 +154,12 @@ $("#where-input").on("paste keyup click", function () {
 
 $("#btn-start").click(function () {
     var jsonData = clicked_options['where'];
-    console.log(jsonData);
+    console.log(Object.keys(jsonData).length);
+
+    if (Object.keys(jsonData).length == 0) {
+        alert('지역 정보는 추천에 꼭 필요해요!🙏🏻');
+        return;
+    }
 
     $.ajax({
         type: "POST",
