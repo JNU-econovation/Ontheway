@@ -540,6 +540,10 @@ function addMarker(map, name, markerPosition, positionBounds, option=0) {
 	// map.panBy(80, 0);
 }
 
+$("#title").click(function() {
+	console.log('clicked!');
+	self.location = 'http://127.0.0.1:5000/'
+})
 
 $("#completebtn").click(function () {
 	setShareIconFinish();

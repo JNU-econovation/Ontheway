@@ -194,7 +194,10 @@ $("#btn-start").click(function () {
     // })
 });
 
-
+$("#logo").click(function() {
+    console.log("clicked!")
+    self.location = "http://127.0.0.1:5000/"
+})
 // API 연결
 // $("#where-input").keydown(function (key) {
 //     if (key.keyCode == 13) {
