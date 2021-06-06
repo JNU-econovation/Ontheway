@@ -429,8 +429,10 @@ function getRecPath() {
 					var path = [];
 					var res = response['path']
 
-					container.innerHTML = '';
+					console.log(res);
 
+					container.innerHTML = '';
+					
 					map = new Tmapv2.Map(container, {
 						center: new Tmapv2.LatLng(res[0].lat, res[0].lon),
 						zoom : 11,
@@ -444,7 +446,6 @@ function getRecPath() {
 						addMarker(map, res[k].name, markerPosition, positionBounds);
 					}
 					
-					console.log(path);
 					console.log(map);
 
 					var polyline = new Tmapv2.Polyline({

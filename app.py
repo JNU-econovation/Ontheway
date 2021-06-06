@@ -81,9 +81,11 @@ def path():
     print('🤍', key_path)
 
     output=dict()
+    n=0
     for key in key_path:
         idx = int(key) - 1
-        output[str(idx)] = res[str(idx)]
+        output[n] = res[str(idx)]
+        n += 1
 
     return {'path': output}
 
