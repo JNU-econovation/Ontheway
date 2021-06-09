@@ -274,8 +274,12 @@ function addPlaceListEvent() {
 	const itemEls = listEl.getElementsByTagName("li");
 	let cnt = listEl.childElementCount;
 
-	if (cnt >= 30) {
-		alert("일정은 30개 이상 추가할 수 없습니다!");
+	if (cnt < 3) {
+		alert("일정은 3개 이상 추가해야 합니다!");
+		return;
+	}
+	if (cnt >= 7) {
+		alert("일정은 7개 이상 추가할 수 없습니다!");
 		return;
 	}
 	
