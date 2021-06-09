@@ -205,8 +205,8 @@ function addPlaceListFromSearch(name, lat, lon) {
 	let listEl = document.getElementById('placeul');
 	const itemEls = listEl.getElementsByTagName("li");
 
-	if (listEl.childElementCount >= 30) {
-		alert("일정은 30개 이상 추가할 수 없습니다!");
+	if (listEl.childElementCount >= 7) {
+		alert("일정은 7개 이상 추가할 수 없습니다!");
 		return;
 	}
 
@@ -274,10 +274,6 @@ function addPlaceListEvent() {
 	const itemEls = listEl.getElementsByTagName("li");
 	let cnt = listEl.childElementCount;
 
-	if (cnt < 3) {
-		alert("일정은 3개 이상 추가해야 합니다!");
-		return;
-	}
 	if (cnt >= 7) {
 		alert("일정은 7개 이상 추가할 수 없습니다!");
 		return;
@@ -408,6 +404,11 @@ function getRecPath() {
 	var listUl = document.getElementById('placeul');
 	// console.log(listUl.childElementCount);
 	let cnt = 0;
+	
+	if (listUl.childElementCount < 3) {
+		alert("일정은 3개 이상 추가해야 합니다!");
+		return;
+	}
 
 	const itemEls = listUl.getElementsByTagName("li");
 	for (let el of itemEls) {
