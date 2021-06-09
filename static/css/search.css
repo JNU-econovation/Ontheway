@@ -219,6 +219,10 @@ section {
     width: 4rem;
 }
 
+#logo {
+    cursor: pointer;
+}
+
 @media screen and (min-width: 320px) {
     .main {
         display: flex;

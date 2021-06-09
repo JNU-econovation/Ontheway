@@ -130,7 +130,7 @@ $("#searchKeyword").on("paste keyup click", function () {
 
 $("#logo").click(function() {
     console.log("clicked!")
-    self.location = "http://127.0.0.1:5000/"
+    self.location = "http://13.125.11.77/"
 })
 
 // jquery에서는 동적으로 생성된 객체에 이벤트 걸 때 이렇게 한다.

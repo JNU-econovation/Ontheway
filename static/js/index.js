@@ -196,7 +196,7 @@ $("#btn-start").click(function () {
 
 $("#logo").click(function() {
     console.log("clicked!")
-    self.location = "http://127.0.0.1:5000/"
+    self.location = "http://13.125.11.77/"
 })
 // API 연결
 // $("#where-input").keydown(function (key) {

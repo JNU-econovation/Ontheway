@@ -546,7 +546,7 @@ function addMarker(map, name, markerPosition, positionBounds, option=0) {
 
 $("#title").click(function() {
 	console.log('clicked!');
-	self.location = 'http://127.0.0.1:5000/'
+    self.location = "http://13.125.11.77/"
 })
 
 $("#completebtn").click(function () {
