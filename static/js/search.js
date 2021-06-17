@@ -20,52 +20,31 @@ function addRemoveFunctionToBtn() {
         if (placeName == clicked_items[item].name) {
             let remove_index = clicked_items.indexOf(clicked_items[item]);
             clicked_items.splice(remove_index, 1);
-            console.log(clicked_items);
+            // console.log(clicked_items);
             total.innerHTML = '총 ' + clicked_items.length + ' 곳';
         }
         if (clicked_items.length == 0) {
-            console.log(clicked_items);
+            // console.log(clicked_items);
             total.parentNode.removeChild(total);
         }
     }
 }
-/*
-{
-    0 : name, lat, log
-}
-*/
-// function goToMap() {
-//     var jsonData = {};
-//     for (var k in clicked_items) {
-//         jsonData[k] = clicked_items[k];
-//         console.log("clicked_items[k]"+clicked_items[k]);
-//     }
-
-//     console.log(jsonData);
-//     $.ajax({
-//         type: "POST",
-//         contentType: "application/json",
-//         url: "/map",
-//         dataType: "text",
-//         data: JSON.stringify(jsonData),
-//         success: function (response) {
-//             document.write(response);
-            
-//         },
-//         error: function (request, status, error) {
-//             console.log(error);
-//             // console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-//         }
-//     })
-// }
-
 
 $("#btn-start").click(function() {
-    console.log("clicked!!");
-    var jsonData = {};
+    // console.log("clicked!!");
+    var clickedData = {};
+
     for (var k in clicked_items) {
-        jsonData[k] = clicked_items[k];
-        console.log("clicked_items[k]"+clicked_items[k]);
+        clickedData[k] = clicked_items[k];
+    }
+    
+    var jsonData = {
+        "place": clickedData,
+        "pos": {
+            "province": $('#pos').text(),
+            "lat": $('#lat').text(),
+            "lon": $('#lon').text()
+        }
     }
 
     console.log(jsonData);
@@ -76,7 +55,6 @@ $("#btn-start").click(function() {
         dataType: "text",
         data: JSON.stringify(jsonData),
         success: function (response) {
-            console.log(response);
             document.write(response);
             document.close();
         },
@@ -114,7 +92,7 @@ $("#searchKeyword").on("paste keyup click", function () {
         success: function (response) {
             removeList();
             let resultpoisData = response;
-            console.log(resultpoisData);
+
             for (let k in resultpoisData) {
                 // 위도, 경도, 이름 받아온다.
                 let lat = Number(resultpoisData[k].lat);
@@ -150,6 +128,10 @@ $("#searchKeyword").on("paste keyup click", function () {
     })
 });
 
+$("#logo").click(function() {
+    console.log("clicked!")
+    self.location = "http://13.125.11.77/"
+})
 
 // jquery에서는 동적으로 생성된 객체에 이벤트 걸 때 이렇게 한다.
 $(document).on("click", "#search-item", function () {
@@ -186,7 +168,7 @@ $(document).on("click", "#search-item", function () {
                                 +       "<button id='btn-remove' alt='추가했던 장소 삭제 버튼'  onclick='addRemoveFunctionToBtn()'>x</button>";
         selected_item.id = "selected-item";
         selected_items.appendChild(selected_item);
-        console.log(clicked_items);
+        // console.log(clicked_items);
         return;
     }
     selected_places.innerHTML = "<div id='total'>총 " + total_sum + " 곳</div>"
@@ -196,7 +178,7 @@ $(document).on("click", "#search-item", function () {
                               +       "<button id='btn-remove' alt='추가했던 장소 삭제 버튼'  onclick='addRemoveFunctionToBtn()'>x</button>"
                               +   "</div></div>"
 
-    console.log(clicked_items);
+    // console.log(clicked_items);
 });
 
 // 밖에 누르면 places-example 숨기게 한다.

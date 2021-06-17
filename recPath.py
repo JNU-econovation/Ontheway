@@ -30,9 +30,10 @@ class Travel():
         self.opt_length=None
         self.matrix = matrix
         self.min_length = np.inf
-
+        print('💙', len(matrix))
         if len(matrix)>=4:
             n = len(matrix) - 1
+            print('💛',n)
             PQ = PriorityQueue()
             v = SSTNode(0)
             v.path = [1]
@@ -41,6 +42,7 @@ class Travel():
 
             while (not PQ.empty()):
                 v = PQ.get()[1]
+                print('💚',v)
                 if (v.bound < self.min_length):
                     for i in range(2, n + 1):
                         if (v.contains(i)):
@@ -144,7 +146,11 @@ def construct_matrix(poses):
                     except:
                         print('API 수집오류 발생, 재시도')
                     break
-                matrix[start+1][end+1] = total_time
+                # print('💚',total_time)
+                try:
+                    matrix[start+1][end+1] = total_time
+                except:
+                    pass
             else:
                 matrix[start+1][end+1] = 0
 
@@ -163,9 +169,13 @@ def rec_path(data):
     data = list(data.values())
     places = np.array([x['name'] for x in data])
     poses = np.array([[float(x['lat']), float(x['lon'])] for x in data])
+    print('🧡',poses)
     matrix, matrix_info = construct_matrix(poses)
+    print('🧡', matrix)
+    # print('🧡', matrix_info)
     travel = Travel()
     travel.calculate(matrix)
+    print('🧡', travel.opt_path)
     path_info = pick_path_info(matrix_info, travel.opt_path)
     opt_path = [str(x) for x in travel.opt_path]
     # print(path_places)

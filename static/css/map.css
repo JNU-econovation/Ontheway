@@ -26,6 +26,7 @@ input:focus {
     outline: none;
 }
 input[type=number] {
+    width: 35px;
     line-height: 18px;
     border: solid 1px #000000;
     border-right: none;
@@ -363,6 +364,7 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
 }
 #schedule .reclist ul li .recinfo span {
     font-size: 15px;
